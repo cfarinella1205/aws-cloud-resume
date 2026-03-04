@@ -11,6 +11,7 @@
     <div class="container">
         <header>
             <h1>CARSON FARINELLA</h1>
+            <h1>CARSON FARINELLA</h1>
             <p class="subtitle">Aspiring Solutions Architect | AWS Cloud Enthusiast</p>
             <div class="contact-links">
                 <a href="mailto:cfarinella1205@outlook.com">Email</a>
@@ -26,7 +27,7 @@
         <section id="summary">
             <h2>Professional Summary</h2>
             <p>
-                Senior Information Technology student at <strong>Florida International University</strong> (Graduating Fall 2026) and active member of the <strong>FIU AWS Cloud Club</strong>. Driven by a fascination for high-availability systems and cloud security,currently seeking an <strong>IT Application Analyst Internship</strong> to apply my academic foundation in networking and automation to enterprise-level challenges. Proven ability to translate complex technical requirements into functional cloud solutions through the <strong>AWS Cloud Resume Challenge</strong>.
+                Senior Information Technology student at <strong>Florida International University</strong> (Graduating Fall 2026) and active member of the <strong>FIU AWS Cloud Club</strong>. Driven by a fascination for high-availability systems and cloud security, currently seeking an <strong>IT Application Analyst Internship</strong> to apply my academic foundation in networking and automation to enterprise-level challenges. Proven ability to translate complex technical requirements into functional cloud solutions through the <strong>AWS Cloud Resume Challenge</strong>.
             </p>
         </section>
 
@@ -75,8 +76,12 @@
                     <p>AWS (S3, CloudFront, Route53), IT Automation, Scripting (Python/Bash), Linux/OS</p>
                 </div>
                 <div class="skill-category">
-                    <strong>Data & Tools:</strong>
-                    <p>Database Administration, Git/GitHub, CI/CD Pipelines, Infrastructure as Code (Terraform)</p>
+                    <strong>Data & Infrastructure:</strong>
+                    <p>Database Administration, Git/GitHub, CI/CD Pipelines, Infrastructure as Code (AWS SAM)</p>
+                </div>
+                <div class="skill-category">
+                    <strong>Professional Leadership:</strong>
+                    <p>Operational Excellence, Bias for Action, Ownership, Customer-Obsessed Technical Support</p>
                 </div>
             </div>
         </section>
@@ -93,7 +98,7 @@
                     <li><strong>Frontend:</strong> Hosted via S3 Static Website Hosting with CloudFront distribution for global delivery.</li>
                     <li><strong>DNS/SSL:</strong> Custom domain routing via Route 53 with automated SSL certificates (ACM).</li>
                     <li><strong>CI/CD:</strong> Automated deployment pipeline using GitHub Actions to sync local code to S3.</li>
-                    <li><strong>Backend:</strong> Serverless visitor counter via API Gateway, Lambda, and DynamoDB.</li>
+                    <li><strong>Backend & IaC:</strong> Serverless visitor counter via API Gateway, Lambda, and DynamoDB; provisioned via <strong>AWS Serverless Application Model (SAM)</strong>.</li>
                 </ul>
             </div>
         </section>
@@ -108,7 +113,8 @@
     <script>
     async function updateCounter() {
         try {
-            let response = await fetch("https://m2n5y3vggd.execute-api.us-east-1.amazonaws.com");
+
+            let response = await fetch("https://sg47t70dpa.execute-api.us-east-1.amazonaws.com/Prod/visitor");
             let data = await response.json();
             document.getElementById('counter').innerHTML = data.count;
         } catch (err) {
