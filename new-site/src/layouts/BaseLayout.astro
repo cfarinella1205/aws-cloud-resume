@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Carson Farinella — IT student, homelab builder, aspiring solutions architect." } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style is:global>
+    :root {
+  --bg:        #F4F6F2;
+  --ink:       #1C2119;
+  --accent:    #4A7C59;
+  --muted:     #6B7B66;
+  --rule:      #C8D4C4;
+  --highlight: #E8EFE5;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+}
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; }
+
+    body {
+  min-height: 100vh;
+  /* Signature: the vertical rule */
+  border-left: 3px solid var(--accent);
+  padding-left: clamp(2rem, 5vw, 5rem);
+  padding-right: clamp(2rem, 5vw, 5rem);
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    p { line-height: 1.75; color: var(--ink); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <slot />
+</body>
+</html>
