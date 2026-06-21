@@ -10,9 +10,9 @@ import Nav from "../components/Nav.astro";
       <p class="eyebrow">Based in Miami, FL</p>
       <h1>Carson<br /><em>Farinella</em></h1>
       <p class="tagline">
-        IT student at FIU. I build things that run at home before I put them in the cloud —
-        homelabs, automation agents, and the occasional over-engineered solution to a simple problem.
-        Currently aiming at a Solutions Architect role.
+        Senior IT student at FIU. I enjoy building things that are polished, cost-effective, and functional.
+        Safe to assume I am working on at least 3 projects.
+        Currently aiming for a Solutions Architect role.
       </p>
     </section>
 
@@ -21,21 +21,21 @@ import Nav from "../components/Nav.astro";
       <ul class="project-list">
         <li>
           <span class="project-label">Homelab</span>
-          <p>Turning a spare PC with an RTX 3080 Super into a proper home server — Docker, a local LLM, Pi-hole, and a Cloudflare tunnel to tie it all together.</p>
+          <p>Turning a spare PC with an RTX 3080 Super into a proper home server. Docker, a local LLM, Pi-hole, and a Cloudflare tunnel to tie it all together.</p>
         </li>
         <li>
           <span class="project-label">Hermes</span>
-          <p>A local AI agent that runs on my own hardware, reachable over Telegram and Discord. Currently being rehabilitated after a period of neglect.</p>
+          <p>A local AI agent that runs on my own hardware. Currently fine tuning model to optimize tool usage and child-agent management.</p>
         </li>
         <li>
-          <span class="project-label">This site</span>
-          <p>A full overhaul from a static resume page to something that actually reflects the work I do. You're looking at the result.</p>
+          <span class="project-label">RBAC Server</span>
+          <p>Serving as scrum master and team lead for my summer term Capstone 2 project. Project repository is on Github.</p>
         </li>
       </ul>
     </section>
 
     <section class="cta-row">
-      <a href="/resume" class="cta-primary">View my resume</a>
+      <a href="/resume" class="cta-primary">View Resume</a>
       <a href="/blog" class="cta-secondary">Read the blog</a>
       <a href="mailto:cfarinella1205@outlook.com" class="cta-secondary">Get in touch</a>
     </section>
@@ -116,14 +116,14 @@ import Nav from "../components/Nav.astro";
   }
 
   .cta-row {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid var(--rule);
-    margin-bottom: 4rem;
-  }
+  display: flex;
+  gap: 0.75rem 1.25rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  margin-bottom: 4rem;
+}
   .cta-primary {
     display: inline-block;
     background: var(--accent);
@@ -147,11 +147,17 @@ import Nav from "../components/Nav.astro";
     padding-bottom: 1px;
     transition: color 0.15s, border-color 0.15s;
   }
-  .cta-secondary:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    text-decoration: none;
-  }
+  .cta-secondary {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
 
   footer {
     font-size: 0.8rem;

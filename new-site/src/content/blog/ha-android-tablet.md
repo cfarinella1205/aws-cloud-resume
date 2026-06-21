@@ -1,8 +1,8 @@
 ---
 
-title: "Running Home Assistant Core on a $40 Android Tablet"
+title: "Running Home Assistant Core on a Generic Android Tablet"
 date: 2026-06-01T00:00:00Z
-description: "How I turned an old Android 8.1 tablet into a surprisingly capable smart home server using Termux, proot, and Ubuntu — and why it actually works."
+description: "How I turned an old Android 8.1 tablet into a surprisingly capable smart home server using Termux, proot, and Ubuntu."
 tags: ["homelab", "home-assistant", "android", "linux"]
 draft: false
 
@@ -10,11 +10,11 @@ draft: false
 
 
 
-There's a certain type of homelab project that starts with "I have this old device lying around" and ends three hours later with something that probably shouldn't work but does. This is one of those.
+I believe most people in a "tech" field are gifted old devices that friends and family no longer have a use for. This is great, but then you have devices collecting dust and reminding you to actually build things.
 
 
 
-I had a generic Android 8.1 tablet that wasn't doing anything useful. I also wanted to run Home Assistant Core — the bare Python version of HA, without the full OS — without buying dedicated hardware. What followed was equal parts documentation archaeology and stubborn terminal work.
+I had a generic Android 8.1 tablet that I had been given. I also wanted to run Home Assistant Core the bare Python version of HA, without buying dedicated hardware. What followed was equal parts documentation archaeology and stubborn terminal work.
 
 
 
@@ -22,11 +22,11 @@ Here's how it went.
 
 
 
-\## Why not just buy a Raspberry Pi?
+## Why not just buy a Raspberry Pi?
 
 
 
-Supply issues and cost, mostly. A Pi 4 with a case and SD card runs $80–100 when you can find one. The tablet was already in my drawer. And honestly, there was a more interesting reason: I wanted to understand what I was running, not just flash an image and call it done.
+Stubborness and cost. A Pi 4 with a case and SD card runs $80–100. The tablet was already in my drawer. This came about primarily because I first thought to use Fully Kiosk to use the tablet as a wall-mounted display. Once I started doing the research and found Home Assistant, I thought the hardware could handle running HA Core and displaying the dashboards.
 
 
 
@@ -34,11 +34,11 @@ Running HA Core on a tablet forces you to understand the layers. You're not gett
 
 
 
-\## The stack: Termux → proot-distro → Ubuntu → Home Assistant
+## The stack: Termux → proot-distro → Ubuntu → Home Assistant
 
 
 
-Android runs Linux under the hood, but it's a locked-down version — no root, no standard package manager, limited filesystem access. Termux is a terminal emulator that gives you a real shell and its own package ecosystem without needing root. From there, `proot-distro` lets you install a full Linux distro (I used Ubuntu) inside a chroot-like environment. It's not a VM, not a container — it's more like running Linux inside Linux with some filesystem tricks to make it work.
+Android runs Linux under the hood, but it's a locked-down version. No root, no standard package manager, and limited filesystem access. Termux is a terminal emulator that gives you a real shell and its own package ecosystem without needing root. From there, `proot-distro` lets you install a full Linux distro (I used Ubuntu) inside a chroot-like environment. It's not a VM and not a container, it's more like running Linux inside Linux with some filesystem tricks and stubborn Terumux-Boot scripts to make it work and handle power-cycles without intervention.
 
 
 
@@ -50,7 +50,7 @@ The rough steps:
 
 
 
-1\. Install Termux from F-Droid (not the Play Store version — it's outdated)
+1\. Install Termux from F-Droid not the Play Store version (honestly it could work but someone online said to avoid it so I did)
 
 2\. `pkg install proot-distro`
 
@@ -64,7 +64,7 @@ The rough steps:
 
 
 
-\## What actually gave me trouble
+## What actually gave me trouble
 
 
 
@@ -76,11 +76,11 @@ The second wall was the `hass` process dying silently on first run. No error, ju
 
 
 
-The third wall was keeping it running. Android aggressively kills background processes to save battery. The fix is buried in Android's developer options: disabling battery optimization for Termux specifically, and acquiring a wakelock inside Termux with `termux-wake-lock` before starting the Ubuntu session.
+The third wall was keeping it running. Android aggressively kills background processes to save battery. The first fix is in Android's developer options: disabling battery optimization for Termux specifically, and acquiring a wakelock inside Termux with `termux-wake-lock` before starting the Ubuntu session. Fully Kiosk and the Termux-Boot addon actually do some heavy lifting here too. Termux-Boot starts the ssh service and HA Core if the tablet power-cycles, and Fully Kiosk starts Termux and Termux-Boot on device boot as a failsafe. This set up has been running for weeks with no need for intervention.
 
 
 
-\## SSH: the part that made it actually useful
+## SSH: the part that made it actually useful
 
 
 
@@ -92,11 +92,11 @@ Setting up SSH inside the Ubuntu proot environment meant I could manage the whol
 
 
 
-This was my first real SSH setup and it worked first try, which felt significant at the time.
+This was my first SSH setup and it worked first try, which felt significant at the time.
 
 
 
-\## What it actually runs
+## What it actually runs
 
 
 
@@ -110,31 +110,33 @@ Right now the tablet handles:
 
 \- The HA API, which I'm slowly learning to query for other projects
 
-
-
-It runs 24/7 on a standard USB-C charger. Tablet stays plugged in, screen off, and has been stable for months without a restart.
-
-
-
-\## Would I recommend this?
+\- Fully Kiosk loads the dashboards so the entire thing functions as an AIO smart home control hub.
 
 
 
-For learning: yes, strongly. You come out the other side understanding Termux, Linux environments, Python virtual environments, SSH, and Home Assistant's architecture — all from one project.
+It runs 24/7 on a standard USB-C charger. The tablet stays plugged in and has consistently handled any accidental restarts.
 
 
 
-For a production smart home: depends on your tolerance for occasional weirdness. Android's memory management will occasionally get ornery. The proot environment adds a layer of indirection that can make debugging stranger. If you want rock-solid, buy a Pi or an old thin client and run HA OS.
+## Would I recommend this?
 
 
 
-But if you have an old Android device and the time to figure it out, it's a genuinely satisfying build.
+For learning: Strongly recommend. You come out the other side understanding Termux, Linux environments, Python virtual environments, SSH, and Home Assistant's architecture — all from one project.
 
 
 
-\---
+For a production smart home: depends on your tolerance for occasional weirdness. Android's memory management has not posed much issue but the startup scripts can be bested from time to time. The proot environment adds a layer of indirection that can make debugging stranger. If you want rock-solid, buy a Pi or an old thin client and run HA OS. If you can get HA Core to run on an Android tablet in this manner the technical challenge posed by the lack of app support in Home Assistant won't really be an issue.
 
 
 
-\*This is part of an ongoing series documenting my homelab build. Next up: setting up the network foundation and getting a Cloudflare tunnel running on my project PC.\*
+If you have an old Android device and the time to figure it out, it's a genuinely satisfying build.
+
+
+
+---
+
+
+
+*This is part of an ongoing series of retroactive posts documenting my homelab build.*
 

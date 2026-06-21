@@ -22,11 +22,11 @@ import Nav from "../components/Nav.astro";
     <section>
       <h2>Summary</h2>
       <p>
-        Senior Information Technology student at <strong>Florida International University</strong> (Graduating Fall 2026)
+        Senior Information Technology student at <strong>Florida International University</strong>
         and active member of the <strong>FIU AWS Cloud Club</strong>. Driven by a fascination for high-availability
-        systems and cloud security, currently seeking a <strong>Solutions Architect Internship</strong> to apply my
-        academic foundation in networking and automation to enterprise-level challenges. Proven ability to translate
-        complex technical requirements into functional cloud solutions through the <strong>AWS Cloud Resume Challenge</strong>.
+        systems and low-cost deployment, currently seeking a <strong>Solutions Architect Internship</strong> to apply my
+        academic foundation in networking and automation to enterprise level challenges. Proven ability to translate
+        complex technical requirements into functional cloud solutions.
       </p>
     </section>
 
@@ -57,33 +57,35 @@ import Nav from "../components/Nav.astro";
           <span class="entry-date">Expected Sept 2026</span>
         </div>
         <div class="entry-sub">Amazon Web Services · <em>In Progress</em></div>
-        <ul>
-          <li>Focus: AWS Shared Responsibility Model, Cloud Economics, and Core Service Deployment.</li>
         </ul>
       </div>
     </section>
 
     <section>
-      <h2>Technical Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-block">
-          <strong>Networking & Security</strong>
-          <p>Applied Computer Networks (TCP/IP, DNS), Network Security, Cybersecurity Fundamentals</p>
-        </div>
-        <div class="skill-block">
-          <strong>Cloud & Automation</strong>
-          <p>AWS (S3, CloudFront, Route 53, Lambda, DynamoDB), IT Automation, Scripting (Python/Bash), Linux/OS</p>
-        </div>
-        <div class="skill-block">
-          <strong>Data & Infrastructure</strong>
-          <p>Database Administration, Git/GitHub, CI/CD Pipelines, Infrastructure as Code (AWS SAM), Docker</p>
-        </div>
-        <div class="skill-block">
-          <strong>Homelab & Systems</strong>
-          <p>SSH, Cloudflare Tunnel, Home Assistant, Local LLM deployment, Network architecture</p>
-        </div>
-      </div>
-    </section>
+  <h2>Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <strong>Languages</strong>
+      <p>Python, JavaScript, HTML, CSS, Java, Bash</p>
+    </div>
+    <div class="skill-block">
+      <strong>Cloud & Infrastructure</strong>
+      <p>AWS (S3, CloudFront, Route 53, Lambda, DynamoDB), Infrastructure as Code (AWS SAM), CI/CD Pipelines, Docker</p>
+    </div>
+    <div class="skill-block">
+      <strong>Networking & Security</strong>
+      <p>TCP/IP, DNS, Network Security, Cybersecurity Fundamentals, Cloudflare Tunnel, SSH</p>
+    </div>
+    <div class="skill-block">
+      <strong>Systems & Tools</strong>
+      <p>Linux, Android (Termux/proot), Git/GitHub, VS Code, Home Assistant, Local LLM deployment</p>
+    </div>
+    <div class="skill-block">
+      <strong>Data & Automation</strong>
+      <p>Database Administration, IT Automation, Scripting, Network architecture</p>
+    </div>
+  </div>
+</section>
 
     <section>
       <h2>Projects</h2>
@@ -93,12 +95,6 @@ import Nav from "../components/Nav.astro";
           <span class="entry-date">Completed</span>
         </div>
         <p>Serverless resume website demonstrating full-stack cloud competency and automated deployment.</p>
-        <ul>
-          <li><strong>Frontend:</strong> S3 static hosting with CloudFront distribution for global CDN delivery.</li>
-          <li><strong>DNS/SSL:</strong> Custom domain routing via Route 53 with automated SSL certificates (ACM).</li>
-          <li><strong>CI/CD:</strong> GitHub Actions pipeline — push to main auto-deploys and invalidates CloudFront cache.</li>
-          <li><strong>Backend & IaC:</strong> Serverless visitor counter via API Gateway, Lambda, and DynamoDB, provisioned with AWS SAM.</li>
-        </ul>
       </div>
       <div class="entry project-entry">
         <div class="entry-head">
@@ -149,15 +145,15 @@ import Nav from "../components/Nav.astro";
     margin-bottom: 0.75rem;
   }
   .header-links {
-    font-size: 0.875rem;
-    color: var(--muted);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 0;
-    align-items: center;
-  }
-  .header-links a { color: var(--accent); }
-  .sep { margin: 0 0.5rem; color: var(--rule); }
+  font-size: 0.875rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0;
+  align-items: center;
+}
+.header-links a { color: var(--accent); white-space: nowrap; }
+.sep { margin: 0 0.4rem; color: var(--rule); flex-shrink: 0; }
 
   section {
     margin-bottom: 2.5rem;
@@ -223,10 +219,15 @@ import Nav from "../components/Nav.astro";
   }
 
   .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
   }
+}
   .skill-block strong {
     display: block;
     font-size: 0.8rem;
@@ -259,4 +260,52 @@ import Nav from "../components/Nav.astro";
     color: var(--rule);
     line-height: 1;
   }
+
+   @media print {
+  @page { margin: 0.75in; }
+  
+  nav { display: none !important; }
+  
+  body {
+    background: white !important;
+    padding: 0 !important;
+    border-left: none !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    font-size: 11pt;
+  }
+
+  .page-header h1 {
+    font-size: 24pt !important;
+  }
+
+  h2 {
+    font-size: 8pt !important;
+    border-bottom: 1px solid #ccc !important;
+    color: #000 !important;
+  }
+
+  .entry-title { font-size: 11pt !important; }
+  .entry-date { font-size: 9pt !important; }
+  .entry-sub { font-size: 9pt !important; }
+
+  section {
+    border-bottom: none !important;
+    margin-bottom: 1rem !important;
+    padding-bottom: 0.5rem !important;
+    page-break-inside: avoid;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  .skill-block strong { font-size: 8pt !important; }
+  .skill-block p { font-size: 9pt !important; }
+
+  footer { display: none !important; }
+
+  a { color: #000 !important; text-decoration: none !important; }
+}
 </style>
