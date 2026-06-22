@@ -10,15 +10,9 @@ draft: false
 
 
 
-I believe most people in a "tech" field are gifted old devices that friends and family no longer have a use for. This is great, but then you have devices collecting dust and reminding you to actually build things.
-
-
-
 I had a generic Android 8.1 tablet that I had been given. I also wanted to run Home Assistant Core the bare Python version of HA, without buying dedicated hardware. What followed was equal parts documentation archaeology and stubborn terminal work.
 
 
-
-Here's how it went.
 
 
 
@@ -26,7 +20,7 @@ Here's how it went.
 
 
 
-Stubborness and cost. A Pi 4 with a case and SD card runs $80–100. The tablet was already in my drawer. This came about primarily because I first thought to use Fully Kiosk to use the tablet as a wall-mounted display. Once I started doing the research and found Home Assistant, I thought the hardware could handle running HA Core and displaying the dashboards.
+Stubborness and cost. A Pi 4 with a case and SD card runs $80–100. The tablet was already taking up space in my desk. This came about primarily because I first thought to use Fully Kiosk to use the tablet as a wall-mounted display. Once I started doing the research and found Home Assistant, I thought the hardware could handle running HA Core and displaying the dashboards.
 
 
 
