@@ -2,7 +2,7 @@
 title: "Learning Git by Failing (at first) to Merge a Front-End Overhaul"
 date: 2026-06-23T02:27:09Z
 description: "How a simple Node version bump turned into a multi-hour git disaster involving two machines, a lucky zip file, and accidentally overwriting my own branch."
-tags: [git], [astro], [aws], [devlog], [lessons-learned]
+tags: ["git", "astro", "aws", "devlog", "lessons-learned"]
 draft: false
 ---
 
