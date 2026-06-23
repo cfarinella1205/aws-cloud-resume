@@ -35,7 +35,7 @@ const formatDate = (date: Date) =>
               <span class="post-desc">{post.data.description}</span>
               {post.data.tags && (
                 <span class="post-tags">
-                  {post.data.tags.map(tag => <span class="tag">{tag}</span>)}
+                  {post.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
                 </span>
               )}
             </a>

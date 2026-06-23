@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "post": "bash scripts/new-post.sh"
+  }
+}

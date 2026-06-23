@@ -29,7 +29,7 @@ const formatDate = (date: Date) =>
         <span class="date">{formatDate(post.data.date)}</span>
         {post.data.tags && (
           <span class="tags">
-            {post.data.tags.map(tag => <span class="tag">{tag}</span>)}
+            {post.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
           </span>
         )}
       </div>
