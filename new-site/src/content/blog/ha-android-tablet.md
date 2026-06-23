@@ -10,10 +10,6 @@ draft: false
 
 
 
-I believe most people in a "tech" field are gifted old devices that friends and family no longer have a use for. This is great, but then you have devices collecting dust and reminding you to actually build things.
-
-
-
 I had a generic Android 8.1 tablet that I had been given. I also wanted to run Home Assistant Core the bare Python version of HA, without buying dedicated hardware. What followed was equal parts documentation archaeology and stubborn terminal work.
 
 
@@ -30,7 +26,7 @@ Stubborness and cost. A Pi 4 with a case and SD card runs $80–100. The tablet 
 
 
 
-Running HA Core on a tablet forces you to understand the layers. You're not getting the nice OS wrapper. You're installing Python dependencies, setting up a virtual environment, and figuring out why a Linux process won't start on Android. That's a better education.
+Running HA Core on a tablet forces you to understand the layers. You're not getting the nice OS wrapper. You're installing Python dependencies, setting up a virtual environment, and figuring out why a Linux process won't start on Android.
 
 
 
