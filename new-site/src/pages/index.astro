@@ -1,0 +1,166 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+---
+<BaseLayout title="Carson Farinella">
+  <Nav />
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Based in Miami, FL</p>
+      <h1>Carson<br /><em>Farinella</em></h1>
+      <p class="tagline">
+        Senior IT student at FIU. I enjoy building things that are polished, cost-effective, and functional.
+        Safe to assume I am working on at least 3 projects.
+        Currently aiming for a Solutions Architect role.
+      </p>
+    </section>
+
+    <section class="now">
+      <h2>What I'm working on</h2>
+      <ul class="project-list">
+        <li>
+          <span class="project-label">Homelab</span>
+          <p>Turning a spare PC with an RTX 3080 Super into a proper home server. Docker, a local LLM, Pi-hole, and a Cloudflare tunnel to tie it all together.</p>
+        </li>
+        <li>
+          <span class="project-label">Hermes</span>
+          <p>A local AI agent that runs on my own hardware. Currently fine tuning model to optimize tool usage and child-agent management.</p>
+        </li>
+        <li>
+          <span class="project-label">RBAC Server</span>
+          <p>Serving as scrum master and team lead for my summer term Capstone 2 project. Project repository is on Github.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="cta-row">
+      <a href="/resume" class="cta-primary">View Resume</a>
+      <a href="/blog" class="cta-secondary">Read the blog</a>
+      <a href="mailto:cfarinella1205@outlook.com" class="cta-secondary">Get in touch</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© {new Date().getFullYear()} Carson Farinella</p>
+  </footer>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 2rem 0 4rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 3.5rem;
+  }
+  .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 10vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .tagline {
+    max-width: 520px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .now {
+    margin-bottom: 3.5rem;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+  }
+  .project-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .project-list li {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .project-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 0.25rem;
+  }
+  .project-list p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .cta-row {
+  display: flex;
+  gap: 0.75rem 1.25rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  margin-bottom: 4rem;
+}
+  .cta-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 0.65rem 1.4rem;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .cta-primary:hover { opacity: 0.85; text-decoration: none; }
+  .cta-secondary {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .cta-secondary {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+  footer {
+    font-size: 0.8rem;
+    color: var(--rule);
+  }
+</style>
