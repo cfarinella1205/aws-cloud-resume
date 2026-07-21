@@ -3,6 +3,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/resume", label: "Resume" },
   { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
 ];
 const currentPath = Astro.url.pathname;
 ---
@@ -27,37 +28,36 @@ const currentPath = Astro.url.pathname;
 
 <style>
   nav {
-    background: var(--accent);
     margin-bottom: 3.5rem;
-    margin-left: calc(-1 * clamp(2rem, 5vw, 5rem));
-    margin-right: calc(-1 * clamp(2rem, 5vw, 5rem));
-    padding: 0.75rem clamp(2rem, 5vw, 5rem);
+    padding: 1.15rem 0 0.9rem;
+    border-bottom: 1px solid var(--rule);
   }
   ul {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    flex-wrap: nowrap;
+    gap: 1.75rem;
+    flex-wrap: wrap;
   }
   a {
     font-family: var(--font-body);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.75);
+    color: var(--muted);
     text-decoration: none;
     transition: color 0.15s;
     white-space: nowrap;
   }
-  a:hover, a.active {
-    color: #fff;
-    text-decoration: none;
-  }
+  a:hover { color: var(--ink); text-decoration: none; }
+  a.active { color: var(--accent); }
   .external-group {
     margin-left: auto;
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
+  }
+  @media (max-width: 520px) {
+    .external-group { margin-left: 0; }
   }
 </style>

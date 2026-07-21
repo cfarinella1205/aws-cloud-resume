@@ -1,0 +1,26 @@
+[
+  {
+    "title": "AWS Cloud Resume — Architecture",
+    "caption": "The serverless stack behind this site: S3 and CloudFront for delivery, Route 53 for DNS, and a Lambda + DynamoDB visitor counter — all deployed through a GitHub Actions CI/CD pipeline.",
+    "src": "",
+    "post": ""
+  },
+  {
+    "title": "Home Assistant on an Android Tablet",
+    "caption": "Turning a generic Android 8.1 tablet into a capable smart-home server with Termux, proot, and Ubuntu — no dedicated hardware required.",
+    "src": "",
+    "post": "ha-android-tablet"
+  },
+  {
+    "title": "The Git Merge Ordeal",
+    "caption": "Two machines, a lucky zip file, and the front-end overhaul that finally taught me to respect git.",
+    "src": "",
+    "post": "learning-git-by-failing-at-first-to-merge-a-front-end-overhaul"
+  },
+  {
+    "title": "Homelab",
+    "caption": "A spare PC with an RTX 3080 turned into a proper home server — Docker, a local LLM, Pi-hole, and a Cloudflare tunnel tying it together.",
+    "src": "",
+    "post": ""
+  }
+]
