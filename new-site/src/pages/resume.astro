@@ -40,6 +40,13 @@ import Nav from "../components/Nav.astro";
         <div class="entry-sub">Florida International University (FIU)</div>
         <p><strong>Member:</strong> FIU AWS Cloud Club (Inaugural Term – Present)</p>
       </div>
+      <div class="entry">
+        <div class="entry-head">
+          <span class="entry-title">Team Lead & Scrum Master — Senior Capstone II</span>
+          <span class="entry-date">Summer 2026</span>
+        </div>
+        <p>Led a student development team through five Agile sprints to design and build a role-based access control (RBAC) server on an accelerated summer timeline.</p>
+      </div>
     </section>
 
     <section>
@@ -57,35 +64,8 @@ import Nav from "../components/Nav.astro";
           <span class="entry-date">Expected Sept 2026</span>
         </div>
         <div class="entry-sub">Amazon Web Services · <em>In Progress</em></div>
-        </ul>
       </div>
     </section>
-
-    <section>
-  <h2>Technical Skills</h2>
-  <div class="skills-grid">
-    <div class="skill-block">
-      <strong>Languages</strong>
-      <p>Python, JavaScript, HTML, CSS, Java, Bash</p>
-    </div>
-    <div class="skill-block">
-      <strong>Cloud & Infrastructure</strong>
-      <p>AWS (S3, CloudFront, Route 53, Lambda, DynamoDB), Infrastructure as Code (AWS SAM), CI/CD Pipelines, Docker</p>
-    </div>
-    <div class="skill-block">
-      <strong>Networking & Security</strong>
-      <p>TCP/IP, DNS, Network Security, Cybersecurity Fundamentals, Cloudflare Tunnel, SSH</p>
-    </div>
-    <div class="skill-block">
-      <strong>Systems & Tools</strong>
-      <p>Linux, Android (Termux/proot), Git/GitHub, VS Code, Home Assistant, Local LLM deployment</p>
-    </div>
-    <div class="skill-block">
-      <strong>Data & Automation</strong>
-      <p>Database Administration, IT Automation, Scripting, Network architecture</p>
-    </div>
-  </div>
-</section>
 
     <section>
       <h2>Projects</h2>
@@ -104,6 +84,32 @@ import Nav from "../components/Nav.astro";
         <p>Multi-device homelab running Home Assistant Core, a local LLM agent (Hermes), and containerized services via Docker, connected to the public internet through a Cloudflare Tunnel with no open router ports.</p>
       </div>
     </section>
+
+    <section>
+  <h2>Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <strong>Languages</strong>
+      <p>Python, JavaScript, HTML, CSS, Java, Bash</p>
+    </div>
+    <div class="skill-block">
+      <strong>Cloud & Infrastructure</strong>
+      <p>AWS (S3, CloudFront, Route 53, Lambda, DynamoDB), Infrastructure as Code (AWS SAM), CI/CD Pipelines, Docker</p>
+    </div>
+    <div class="skill-block">
+      <strong>Networking & Security</strong>
+      <p>TCP/IP, DNS, Network Architecture, Network Security, Cybersecurity Fundamentals, Cloudflare Tunnel, SSH</p>
+    </div>
+    <div class="skill-block">
+      <strong>Systems & Tools</strong>
+      <p>Linux, Android (Termux/proot), Git/GitHub, VS Code, Home Assistant, Local LLM deployment</p>
+    </div>
+    <div class="skill-block">
+      <strong>Data & Automation</strong>
+      <p>Database Administration, IT Automation, Scripting</p>
+    </div>
+  </div>
+</section>
   </main>
 
   <footer>
@@ -114,20 +120,7 @@ import Nav from "../components/Nav.astro";
   </footer>
 </BaseLayout>
 
-<script>
-  async function updateCounter() {
-    try {
-      const res = await fetch("https://sg47t70dpa.execute-api.us-east-1.amazonaws.com/Prod/visitor");
-      const data = await res.json();
-      const el = document.getElementById("counter");
-      if (el) el.textContent = data.count;
-    } catch {
-      const el = document.getElementById("counter");
-      if (el) el.textContent = "unavailable";
-    }
-  }
-  updateCounter();
-</script>
+<script is:inline defer src="/scripts/visitor-counter.js"></script>
 
 <style>
   main { padding-bottom: 3rem; }
@@ -257,52 +250,68 @@ import Nav from "../components/Nav.astro";
   }
   .footer-note {
     font-size: 0.8rem;
-    color: var(--rule);
+    color: var(--muted);
     line-height: 1;
   }
 
    @media print {
-  @page { margin: 0.75in; }
-  
+  @page { margin: 0.6in; }
+
   nav { display: none !important; }
-  
+
   body {
     background: white !important;
     padding: 0 !important;
     border-left: none !important;
     max-width: 100% !important;
     margin: 0 !important;
-    font-size: 11pt;
+    font-size: 10.5pt;
   }
 
+  main { padding-bottom: 0 !important; }
+
+  .page-header {
+    padding-bottom: 0.6rem !important;
+    margin-bottom: 0.9rem !important;
+  }
   .page-header h1 {
-    font-size: 24pt !important;
+    font-size: 22pt !important;
+    margin-bottom: 0.35rem !important;
   }
 
   h2 {
     font-size: 8pt !important;
     border-bottom: 1px solid #ccc !important;
     color: #000 !important;
+    margin-bottom: 0.5rem !important;
   }
 
-  .entry-title { font-size: 11pt !important; }
+  .entry-title { font-size: 10.5pt !important; }
   .entry-date { font-size: 9pt !important; }
-  .entry-sub { font-size: 9pt !important; }
+  .entry-sub { font-size: 9pt !important; margin-bottom: 0.2rem !important; }
+
+  /* Full printable width — undo the 640px screen reading measure */
+  section > p { max-width: 100% !important; }
+  section > p, .project-entry > p { font-size: 9.5pt !important; line-height: 1.45 !important; }
 
   section {
     border-bottom: none !important;
-    margin-bottom: 1rem !important;
-    padding-bottom: 0.5rem !important;
-    page-break-inside: avoid;
+    margin-bottom: 0.7rem !important;
+    padding-bottom: 0 !important;
+    page-break-inside: auto;   /* allow a section to flow across a break */
   }
+
+  /* Keep the small, atomic units from splitting instead of whole sections */
+  .entry, .project-entry, .skill-block { page-break-inside: avoid; }
+  .entry { margin-bottom: 0.6rem !important; }
 
   .skills-grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 0.5rem !important;
+    gap: 0.4rem 0.75rem !important;
   }
 
-  .skill-block strong { font-size: 8pt !important; }
-  .skill-block p { font-size: 9pt !important; }
+  .skill-block strong { font-size: 8pt !important; margin-bottom: 0.15rem !important; }
+  .skill-block p { font-size: 9pt !important; line-height: 1.4 !important; }
 
   footer { display: none !important; }
 

@@ -1,0 +1,239 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import gallery from "../data/gallery.json";
+
+type GalleryItem = {
+  title: string;
+  caption: string;
+  src?: string;
+  post?: string;
+};
+
+const items = gallery as GalleryItem[];
+---
+<BaseLayout title="Gallery — Carson Farinella" description="Selected diagrams, screenshots, and images from Carson Farinella's projects.">
+  <Nav />
+
+  <main>
+    <header class="page-header">
+      <h1>Gallery</h1>
+      <p class="subhead">
+        A small, curated set of diagrams and screenshots from things I've built.
+        Select any image for a closer look.
+      </p>
+    </header>
+
+    <ul class="grid">
+      {items.map((item, i) => (
+        <li>
+          <button
+            class="tile"
+            type="button"
+            data-index={i}
+            data-title={item.title}
+            data-caption={item.caption}
+            data-src={item.src ?? ""}
+            data-post={item.post ?? ""}
+          >
+            <span class="tile-media">
+              {item.src ? (
+                <img src={item.src} alt={item.title} loading="lazy" />
+              ) : (
+                <span class="slot" aria-hidden="true"><span>Image · 3:2</span></span>
+              )}
+            </span>
+            <span class="tile-title">{item.title}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </main>
+
+  <footer>
+    <p>© {new Date().getFullYear()} Carson Farinella</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title" hidden>
+    <div class="lightbox-backdrop" data-close></div>
+    <figure class="lightbox-panel">
+      <button class="lightbox-close" type="button" aria-label="Close" data-close>&times;</button>
+      <div class="lightbox-media" id="lb-media"></div>
+      <figcaption class="lightbox-caption">
+        <h2 id="lb-title"></h2>
+        <p id="lb-text"></p>
+        <a id="lb-post" class="lightbox-post" href="#" hidden>Read the post &rarr;</a>
+      </figcaption>
+    </figure>
+  </div>
+</BaseLayout>
+
+<script is:inline defer src="/scripts/gallery-lightbox.js"></script>
+
+<style>
+  .page-header {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2.5rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+  .subhead {
+    font-size: 0.95rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.75;
+  }
+
+  .grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem 1.75rem;
+  }
+
+  .tile {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+  }
+  .tile-media {
+    display: block;
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    transition: border-color 0.15s;
+  }
+  .tile-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .tile:hover .tile-media,
+  .tile:focus-visible .tile-media {
+    border-color: var(--accent);
+  }
+  .tile:focus-visible { outline: none; }
+  .tile-title {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* Shared placeholder slot */
+  .slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--highlight);
+  }
+  .slot > span {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 3rem);
+  }
+  .lightbox[hidden] { display: none; }
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(43, 36, 32, 0.55);
+  }
+  .lightbox-panel {
+    position: relative;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    max-width: 720px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.15s;
+  }
+  .lightbox-close:hover { color: var(--ink); }
+  .lightbox-media { width: 100%; }
+  .lightbox-media img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .slot-lg { aspect-ratio: 3 / 2; }
+  .lightbox-caption {
+    padding: 1.5rem 1.75rem 1.75rem;
+  }
+  .lightbox-caption h2 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .lightbox-caption p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .lightbox-post {
+    display: inline-block;
+    margin-top: 1.1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  .lightbox-post[hidden] { display: none; }
+  .lightbox-post:hover { border-color: var(--accent); text-decoration: none; }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+</style>

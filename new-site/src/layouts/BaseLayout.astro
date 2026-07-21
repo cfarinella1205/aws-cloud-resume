@@ -10,6 +10,13 @@ const { title, description = "Carson Farinella — IT student, homelab builder, 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {/* Content-Security-Policy (defense-in-depth; version-controlled).
+      frame-ancestors is intentionally omitted — it is ignored in a <meta> tag and
+      is instead enforced via the X-Frame-Options response header at Cloudflare. */}
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://sg47t70dpa.execute-api.us-east-1.amazonaws.com; base-uri 'self'; form-action 'self';"
+  />
   <meta name="description" content={description} />
   <title>{title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,19 +24,26 @@ const { title, description = "Carson Farinella — IT student, homelab builder, 
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style is:global>
     :root {
-  --bg:        #F4F6F2;
-  --ink:       #1C2119;
-  --accent:    #385641;
-  --muted:     #536050;
-  --rule:      #C8D4C4;
-  --highlight: #E8EFE5;
+  --bg:        #F7F3EC;  /* warm cream */
+  --ink:       #2B2420;  /* espresso, near-black */
+  --muted:     #8A7F72;  /* warm taupe, secondary text */
+  --rule:      #E4DDD1;  /* hairline dividers */
+  --highlight: #EFE9DE;  /* light fill */
+  --accent:    #6B5744;  /* muted warm brown — links, italic name, small emphasis */
   --font-display: 'Fraunces', Georgia, serif;
   --font-body:    'Inter', system-ui, sans-serif;
 }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; }
+    html {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
     body {
   min-height: 100vh;
@@ -39,7 +53,7 @@ const { title, description = "Carson Farinella — IT student, homelab builder, 
   padding-right: clamp(2rem, 5vw, 5rem);
   padding-top: 0;
   padding-bottom: 4rem;
-  max-width: 960px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -52,7 +66,13 @@ const { title, description = "Carson Farinella — IT student, homelab builder, 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
     }
-  </style>
+
+    /* Nav is a separate component, so page-scoped print rules can't reach it.
+       Hide it globally when printing (resume PDF). */
+    @media print {
+      nav { display: none !important; }
+    }
+</style>
 </head>
 <body>
   <slot />
