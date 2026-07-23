@@ -43,3 +43,11 @@ There's no token refresh or early revocation, which means a stolen valid token w
 ## Thank you
 
 This was a challenging course, packed into a short and busy summer semester of senior year. Thank you to my team for the consistency and hard work across all five sprints. And thank you, Professor Sadjadi — the [Capstone Showcase Site](https://capstone.cs.fiu.edu/about) he built and maintains was genuinely useful for keeping this project on track, and turning the showcase into a real chance to meet industry professionals instead of just a grade requirement is well above what the course requires of a professor. Thank you to everyone else who supported the Capstone and Showcase process this summer.
+
+
+
+---
+
+
+
+*Running this project has taken up much of my time over the summer and I will now be returning to the retroactive devlog posts until I catch up with projects that have been finished but not yet shared.*
