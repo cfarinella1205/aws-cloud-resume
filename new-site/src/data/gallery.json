@@ -2,7 +2,13 @@
   {
     "title": "AWS Cloud Resume — Architecture",
     "caption": "The serverless stack behind this site: S3 and CloudFront for delivery, Route 53 for DNS, and a Lambda + DynamoDB visitor counter — all deployed through a GitHub Actions CI/CD pipeline.",
-    "src": "",
+    "src": "/images/gallery/aws_cloud_resume_architecture.png",
+    "post": ""
+  },
+  {
+    "title": "Before & After — Moving to Astro",
+    "caption": "Retiring the hand-rolled static site for a real build pipeline: git push triggers a GitHub Actions Astro build, deploying only the build output to S3 behind CloudFront.",
+    "src": "/images/gallery/astro-pipeline.png",
     "post": ""
   },
   {
