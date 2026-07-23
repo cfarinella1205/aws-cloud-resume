@@ -3,7 +3,7 @@ title: ""Getting a Home Server Onto the Internet Without Opening a Single Port"
 date: 2026-06-20T14:31:41Z
 description: ""How I made a spare gaming PC reachable from anywhere in the world without forwarding a single port on my router.""
 tags: ["[homelab","cloudflare","networking","security","devlog]"]
-draft: true
+draft: false
 ---
 
 I wanted to reach a few things running on my home server from outside the house: a password manager, home automation hub, web UI manager for a game server. The traditional answer is port forwarding, I wanted to take a more modern approach.
