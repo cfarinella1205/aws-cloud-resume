@@ -176,6 +176,7 @@ const items = gallery as GalleryItem[];
     max-width: 720px;
     width: 100%;
     max-height: 90vh;
+    overflow-x: hidden;
     overflow-y: auto;
     margin: 0;
     padding: 0;
@@ -195,10 +196,19 @@ const items = gallery as GalleryItem[];
   }
   .lightbox-close:hover { color: var(--ink); }
   .lightbox-media { width: 100%; }
-  .lightbox-media img {
-    width: 100%;
-    height: auto;
+  /* The lightbox <img> is injected at runtime by gallery-lightbox.js, so it
+     never receives Astro's scoped-style attribute — the scoped selector
+     ".lightbox-media img" never matched it, which is why the image rendered
+     at full natural size. :global() makes these rules apply. The image scales
+     down to fit within its width (the 720px panel) and its height (the
+     viewport minus room for the caption), preserving aspect ratio. */
+  .lightbox-media :global(img) {
     display: block;
+    max-width: 100%;
+    max-height: calc(90vh - 12rem);
+    width: auto;
+    height: auto;
+    margin: 0 auto;
   }
   .slot-lg { aspect-ratio: 3 / 2; }
   .lightbox-caption {
