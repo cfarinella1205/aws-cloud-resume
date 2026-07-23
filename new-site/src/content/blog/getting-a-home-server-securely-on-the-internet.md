@@ -1,8 +1,8 @@
 ---
-title: ""Getting a Home Server Onto the Internet Without Opening a Single Port"
+title: "Getting a Home Server Onto the Internet Without Opening a Single Port"
 date: 2026-06-20T14:31:41Z
-description: ""How I made a spare gaming PC reachable from anywhere in the world without forwarding a single port on my router.""
-tags: ["[homelab","cloudflare","networking","security","devlog]"]
+description: "How I made a spare gaming PC reachable from anywhere in the world without forwarding a single port on my router."
+tags: ["homelab", "cloudflare", "networking", "security", "devlog"]
 draft: false
 ---
 
