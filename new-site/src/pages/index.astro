@@ -49,8 +49,22 @@ import Nav from "../components/Nav.astro";
 
   <footer>
     <p>© {new Date().getFullYear()} Carson Farinella</p>
+    <span class="marks" aria-hidden="true">
+      <svg class="mark" data-mark="a" viewBox="0 0 12 12" width="11" height="11" focusable="false">
+        <circle cx="6" cy="6" r="3.2" fill="currentColor" />
+      </svg>
+      <svg class="mark" data-mark="b" viewBox="0 0 12 12" width="11" height="11" focusable="false">
+        <circle cx="6" cy="6" r="2.3" fill="currentColor" />
+      </svg>
+      <svg class="mark" data-mark="c" viewBox="0 0 12 12" width="11" height="11" focusable="false">
+        <circle cx="6" cy="6" r="1.6" fill="currentColor" />
+      </svg>
+    </span>
+    <a class="mark-link" href="/workbench" data-mark-link hidden>Workbench &rarr;</a>
   </footer>
 </BaseLayout>
+
+<script is:inline defer src="/scripts/footer-marks.js"></script>
 
 <style>
   .hero {
@@ -198,5 +212,37 @@ import Nav from "../components/Nav.astro";
   footer {
     font-size: 0.8rem;
     color: var(--muted);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
   }
+
+  .marks {
+    display: inline-flex;
+    align-items: center;
+    color: var(--rule);
+  }
+  .mark {
+    display: block;
+    /* Padding widens the tap target without scaling the glyph — the 11px
+       width/height attributes are the content box. */
+    box-sizing: content-box;
+    padding: 6px;
+    touch-action: manipulation;
+    transition: color 0.2s ease;
+  }
+  .mark.is-lit { color: var(--muted); }
+
+  .mark-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .mark-link[hidden] { display: none; }
+  .mark-link.is-shown { opacity: 1; }
 </style>
