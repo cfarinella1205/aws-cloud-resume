@@ -9,18 +9,12 @@
     "title": "Before & After — Moving to Astro",
     "caption": "Retiring the hand-rolled static site for a real build pipeline: git push triggers a GitHub Actions Astro build, deploying only the build output to S3 behind CloudFront.",
     "src": "/images/gallery/astro-pipeline.png",
-    "post": ""
+    "post": "rebuilding-this-site-on-astro-and-why-the-old-one-had-to-go"
   },
   {
-    "title": "Home Assistant on an Android Tablet",
-    "caption": "Turning a generic Android 8.1 tablet into a capable smart-home server with Termux, proot, and Ubuntu — no dedicated hardware required.",
-    "src": "",
-    "post": "ha-android-tablet"
-  },
-  {
-    "title": "Homelab",
-    "caption": "A spare PC with an RTX 3080 turned into a proper home server — Docker, a local LLM, Pi-hole, and a Cloudflare tunnel tying it together.",
-    "src": "",
-    "post": ""
+    "title": "Capstone RBAC Server — Live Demo",
+    "caption": "A centralized RBAC and identity server built with a five-person capstone team: RS256-signed JWTs carrying roles and permissions, validated end-to-end from login through a downstream service.",
+    "src": "/images/gallery/rbac-capstone-demo.png",
+    "post": "leading-a-capstone-team-to-ship--showcase-a-real-rbac-server"
   }
 ]
