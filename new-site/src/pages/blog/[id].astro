@@ -29,7 +29,7 @@ const formatDate = (date: Date) =>
         <span class="date">{formatDate(post.data.date)}</span>
         {post.data.tags && (
           <span class="tags">
-            {post.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+            {post.data.tags.map((tag: string) => <a href={`/blog/tags/${tag}`} class="tag">{tag}</a>)}
           </span>
         )}
       </div>
@@ -98,7 +98,10 @@ const formatDate = (date: Date) =>
     border: 1px solid var(--accent);
     border-radius: 2px;
     padding: 0.15rem 0.45rem;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
   }
+  .tag:hover { background: var(--accent); color: #fff; text-decoration: none; }
   .description {
     font-size: 1rem;
     color: var(--muted);
