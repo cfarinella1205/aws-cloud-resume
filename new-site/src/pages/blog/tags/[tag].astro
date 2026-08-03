@@ -1,48 +1,56 @@
 ---
-
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Nav from "../../components/Nav.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Nav from "../../../components/Nav.astro";
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection("blog", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap(post => post.data.tags ?? []))];
+
+  return tags.map(tag => {
+    const filtered = posts
+      .filter(post => post.data.tags?.includes(tag))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    return {
+      params: { tag },
+      props: { tag, posts: filtered },
+    };
+  });
+}
+
+const { tag, posts } = Astro.props;
 
 const formatDate = (date: Date) =>
   date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-
 ---
-<BaseLayout title="Blog — Carson Farinella" description="Writing about homelabs, cloud infrastructure, and building things.">
+<BaseLayout title={`#${tag} — Blog — Carson Farinella`} description={`Posts tagged "${tag}" on Carson Farinella's blog.`}>
   <Nav />
 
   <main>
     <header class="page-header">
-      <h1>Blog</h1>
-      <p class="subhead">
-        Notes on the things I am building.
-        I am not a writer, you should only read this if you believe it contains the solution to a problem you are facing or trying to decide if you should hire me.
-      </p>
+      <a href="/blog" class="back">← All posts</a>
+      <h1>#<em>{tag}</em></h1>
+      <p class="subhead">{posts.length} post{posts.length === 1 ? "" : "s"} tagged “{tag}”.</p>
     </header>
 
-    {posts.length === 0 ? (
-      <p class="empty">Posts coming soon.</p>
-    ) : (
-      <ul class="post-list">
-        {posts.map(post => (
-          <li>
-            <a href={`/blog/${post.id}`} class="post-link">
-              <span class="post-date">{formatDate(post.data.date)}</span>
-              <span class="post-title">{post.data.title}</span>
-              <span class="post-desc">{post.data.description}</span>
-            </a>
-            {post.data.tags && (
-              <div class="post-tags">
-                {post.data.tags.map((tag: string) => <a href={`/blog/tags/${tag}`} class="tag">{tag}</a>)}
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-    )}
+    <ul class="post-list">
+      {posts.map(post => (
+        <li>
+          <a href={`/blog/${post.id}`} class="post-link">
+            <span class="post-date">{formatDate(post.data.date)}</span>
+            <span class="post-title">{post.data.title}</span>
+            <span class="post-desc">{post.data.description}</span>
+          </a>
+          {post.data.tags && (
+            <div class="post-tags">
+              {post.data.tags.map((t: string) => (
+                <a href={`/blog/tags/${t}`} class:list={["tag", { "tag-current": t === tag }]}>{t}</a>
+              ))}
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
   </main>
 
   <footer>
@@ -56,6 +64,17 @@ const formatDate = (date: Date) =>
     border-bottom: 1px solid var(--rule);
     margin-bottom: 2.5rem;
   }
+  .back {
+    display: inline-block;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: color 0.15s;
+  }
+  .back:hover { color: var(--accent); text-decoration: none; }
   h1 {
     font-family: var(--font-display);
     font-size: clamp(2rem, 6vw, 3.5rem);
@@ -63,6 +82,7 @@ const formatDate = (date: Date) =>
     line-height: 1.1;
     margin-bottom: 0.75rem;
   }
+  h1 em { font-style: italic; color: var(--accent); }
   .subhead {
     font-size: 0.95rem;
     color: var(--muted);
@@ -133,11 +153,7 @@ const formatDate = (date: Date) =>
     transition: background 0.15s, color 0.15s;
   }
   .tag:hover { background: var(--accent); color: #fff; text-decoration: none; }
-
-  .empty {
-    color: var(--muted);
-    font-style: italic;
-  }
+  .tag-current { background: var(--accent); color: #fff; }
 
   footer {
     margin-top: 3rem;
