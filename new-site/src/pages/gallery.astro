@@ -32,22 +32,25 @@ for (const [id, img] of Object.entries(sourceImages)) {
 
 const sizes = "(min-width: 1240px) 1040px, 90vw";
 ---
-<BaseLayout title="Gallery — Carson Farinella" description="Selected evidence from Carson Farinella's projects — terminal captures, CI runs, and infrastructure, at a size you can actually read.">
+<BaseLayout title="Gallery — Carson Farinella" description="Images of the things Carson Farinella has built — take a look around.">
   <Nav />
 
   <main>
     <header class="page-header">
       <h1>Gallery</h1>
       <p class="subhead">
-        Evidence from things I've built — terminal output, CI runs, deployed
-        infrastructure. Select any image for a closer look.
+        Images of the things I've built. Take a look around — open any image
+        for more detail.
       </p>
     </header>
 
     <div class="gallery-stack">
       {items.map((item, i) => (
         <section class="gallery-item reveal" aria-labelledby={`item-title-${item.id}`}>
-          <span class="item-index" aria-hidden="true">{item.order}</span>
+          <div class="item-heading">
+            <span class="item-index" aria-hidden="true">{item.order}</span>
+            <h2 id={`item-title-${item.id}`}>{item.title}</h2>
+          </div>
 
           <div class="item-media">
             <button
@@ -75,7 +78,6 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
           </div>
 
           <div class="item-caption">
-            <h2 id={`item-title-${item.id}`}>{item.title}</h2>
             <p>{item.caption}</p>
             {item.post && (
               <a class="post-link" href={`/blog/${item.post}`}>Read the post &rarr;</a>
@@ -143,14 +145,25 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
     transform: none;
   }
 
+  .item-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+  }
   .item-index {
-    display: block;
+    flex-shrink: 0;
     font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     color: var(--accent);
-    margin-bottom: 0.75rem;
+  }
+  .item-heading h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--ink);
   }
 
   .item-media {
@@ -186,13 +199,6 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
   .item-caption {
     max-width: 640px;
     margin-top: 1.25rem;
-  }
-  .item-caption h2 {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 0.6rem;
   }
   .item-caption p {
     font-size: 0.95rem;
@@ -232,13 +238,10 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
   }
   .lightbox-panel {
     position: relative;
-    display: flex;
-    flex-direction: column;
     background: var(--bg);
     border: 1px solid var(--rule);
     max-width: 96vw;
     max-height: 92svh;
-    width: auto;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -259,8 +262,6 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
   }
   .lightbox-close:hover { color: var(--ink); }
   .lightbox-media {
-    flex: 1 1 auto;
-    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -268,19 +269,20 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
   }
   /* The lightbox <img> is injected at runtime by gallery-lightbox.js, so it
      never receives Astro's scoped-style attribute — :global() reaches it.
-     max-height: 92svh (via the flex-shrunk media area) + object-fit: contain
-     keeps the whole image visible without cropping or a scrollbar. */
+     A fixed viewport-unit cap on the image itself (rather than a percentage
+     resolved through a flex parent) is what keeps this predictable across
+     both very wide and very tall screenshots: object-fit: contain never has
+     an ambiguous height to resolve against, so the image can't overflow into
+     the caption below it. */
   .lightbox-media :global(img) {
     display: block;
     max-width: 100%;
-    max-height: 100%;
+    max-height: 68svh;
     width: auto;
     height: auto;
     object-fit: contain;
-    margin: 0 auto;
   }
   .lightbox-caption {
-    flex: 0 0 auto;
     padding: 1.25rem 1.75rem 1.5rem;
   }
   .lightbox-caption h2 {
