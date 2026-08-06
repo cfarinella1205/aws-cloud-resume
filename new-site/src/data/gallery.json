@@ -1,20 +1,26 @@
 [
   {
-    "title": "AWS Cloud Resume — Architecture",
+    "id": "rbac",
+    "order": "01",
+    "title": "Capstone RBAC Server — Startup & Audit Log",
+    "caption": "A centralized RBAC and identity server built with a five-person capstone team: RS256-signed JWTs carrying roles and permissions, validated end-to-end from login through a downstream service.",
+    "alt": "Terminal output from docker compose up: the Postgres database initializing its schema and seed data and reporting healthy, the auth engine warning that no private key file was found so it falls back to a temporary in-memory RS256 key, the Core Authentication Engine starting on port 8080, the downstream mock service delegating authorization checks to it, and audit log lines showing a login and a token validation both granted to the admin role.",
+    "post": "leading-a-capstone-team-to-ship--showcase-a-real-rbac-server"
+  },
+  {
+    "id": "aws",
+    "order": "02",
+    "title": "AWS Cloud Resume — S3 Bucket",
     "caption": "The serverless stack behind this site: S3 and CloudFront for delivery, Route 53 for DNS, and a Lambda + DynamoDB visitor counter — all deployed through a GitHub Actions CI/CD pipeline.",
-    "src": "/images/gallery/aws_cloud_resume_architecture.png",
+    "alt": "AWS S3 console showing the carsonfarinella.com bucket's root objects: 404.html, blog/, favicon.ico, favicon.svg, gallery/, images/, index.html, resume/, scripts/, sitemap-0.xml, sitemap-index.xml, and workbench/ — the actual build output this site deploys from.",
     "post": ""
   },
   {
+    "id": "astro",
+    "order": "03",
     "title": "Before & After — Moving to Astro",
     "caption": "Retiring the hand-rolled static site for a real build pipeline: git push triggers a GitHub Actions Astro build, deploying only the build output to S3 behind CloudFront.",
-    "src": "/images/gallery/astro-pipeline.png",
+    "alt": "GitHub Actions run for the Deploy Resume Website workflow, showing every step succeeding — checkout, Node setup, dependency install, Astro build, AWS credential configuration, sync to S3, CloudFront invalidation, and a Cloudflare cache purge — completing in 24 seconds.",
     "post": "rebuilding-this-site-on-astro-and-why-the-old-one-had-to-go"
-  },
-  {
-    "title": "Capstone RBAC Server — Live Demo",
-    "caption": "A centralized RBAC and identity server built with a five-person capstone team: RS256-signed JWTs carrying roles and permissions, validated end-to-end from login through a downstream service.",
-    "src": "/images/gallery/rbac-capstone-demo.png",
-    "post": "leading-a-capstone-team-to-ship--showcase-a-real-rbac-server"
   }
 ]

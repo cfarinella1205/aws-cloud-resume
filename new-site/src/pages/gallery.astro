@@ -1,53 +1,89 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
+import { Image, getImage } from "astro:assets";
 import gallery from "../data/gallery.json";
 
+import rbacImg from "../assets/gallery/rbac-terminal-log.png";
+import awsImg from "../assets/gallery/aws-s3-bucket-objects.png";
+import astroImg from "../assets/gallery/astro-github-actions-run.png";
+
 type GalleryItem = {
+  id: "rbac" | "aws" | "astro";
+  order: string;
   title: string;
   caption: string;
-  src?: string;
-  post?: string;
+  alt: string;
+  post: string;
 };
 
 const items = gallery as GalleryItem[];
+const sourceImages = { rbac: rbacImg, aws: awsImg, astro: astroImg };
+
+// The lightbox shows a single full-resolution frame rather than the
+// responsive <Image> srcset used inline, so precompute one large AVIF
+// per item at build time and hand its URL to the client script via
+// data-src.
+const lightboxSrcs: Record<string, string> = {};
+for (const [id, img] of Object.entries(sourceImages)) {
+  const optimized = await getImage({ src: img, format: "avif", width: img.width });
+  lightboxSrcs[id] = optimized.src;
+}
+
+const sizes = "(min-width: 1240px) 1040px, 90vw";
 ---
-<BaseLayout title="Gallery — Carson Farinella" description="Selected diagrams, screenshots, and images from Carson Farinella's projects.">
+<BaseLayout title="Gallery — Carson Farinella" description="Selected evidence from Carson Farinella's projects — terminal captures, CI runs, and infrastructure, at a size you can actually read.">
   <Nav />
 
   <main>
     <header class="page-header">
       <h1>Gallery</h1>
       <p class="subhead">
-        A small, curated set of diagrams and screenshots from things I've built.
-        Select any image for a closer look.
+        Evidence from things I've built — terminal output, CI runs, deployed
+        infrastructure. Select any image for a closer look.
       </p>
     </header>
 
-    <ul class="grid">
+    <div class="gallery-stack">
       {items.map((item, i) => (
-        <li>
-          <button
-            class="tile"
-            type="button"
-            data-index={i}
-            data-title={item.title}
-            data-caption={item.caption}
-            data-src={item.src ?? ""}
-            data-post={item.post ?? ""}
-          >
-            <span class="tile-media">
-              {item.src ? (
-                <img src={item.src} alt={item.title} loading="lazy" />
-              ) : (
-                <span class="slot" aria-hidden="true"><span>Image · 3:2</span></span>
-              )}
-            </span>
-            <span class="tile-title">{item.title}</span>
-          </button>
-        </li>
+        <section class="gallery-item reveal" aria-labelledby={`item-title-${item.id}`}>
+          <span class="item-index" aria-hidden="true">{item.order}</span>
+
+          <div class="item-media">
+            <button
+              class="lightbox-trigger"
+              type="button"
+              data-index={i}
+              data-title={item.title}
+              data-caption={item.caption}
+              data-src={lightboxSrcs[item.id]}
+              data-alt={item.alt}
+              data-post={item.post ?? ""}
+              aria-label={`View full-size: ${item.title}`}
+            >
+              <Image
+                src={sourceImages[item.id]}
+                alt={item.alt}
+                widths={[720, 1160, 2320]}
+                sizes={sizes}
+                format="avif"
+                loading={i === 0 ? "eager" : "lazy"}
+                width={sourceImages[item.id].width}
+                height={sourceImages[item.id].height}
+              />
+            </button>
+          </div>
+
+          <div class="item-caption">
+            <h2 id={`item-title-${item.id}`}>{item.title}</h2>
+            <p>{item.caption}</p>
+            {item.post && (
+              <a class="post-link" href={`/blog/${item.post}`}>Read the post &rarr;</a>
+            )}
+          </div>
+        </section>
       ))}
-    </ul>
+    </div>
   </main>
 
   <footer>
@@ -75,7 +111,7 @@ const items = gallery as GalleryItem[];
   .page-header {
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--rule);
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
   }
   h1 {
     font-family: var(--font-display);
@@ -91,66 +127,91 @@ const items = gallery as GalleryItem[];
     line-height: 1.75;
   }
 
-  .grid {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem 1.75rem;
+  .gallery-stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4rem, 9vw, 7.5rem);
   }
 
-  .tile {
+  .gallery-item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 550ms ease, transform 550ms ease;
+  }
+  .gallery-item.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .item-index {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .item-media {
+    border: 1px solid var(--rule);
+    background: var(--highlight);
+  }
+  .lightbox-trigger {
     display: block;
     width: 100%;
     background: none;
     border: none;
     padding: 0;
     margin: 0;
-    text-align: left;
     cursor: pointer;
-    font: inherit;
-    color: inherit;
+    transition: opacity 0.15s;
   }
-  .tile-media {
+  .lightbox-trigger:hover,
+  .lightbox-trigger:focus-visible {
+    opacity: 0.88;
+  }
+  .lightbox-trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+  .lightbox-trigger :global(img) {
     display: block;
-    aspect-ratio: 3 / 2;
     width: 100%;
-    overflow: hidden;
-    border: 1px solid var(--rule);
-    transition: border-color 0.15s;
-  }
-  .tile-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .tile:hover .tile-media,
-  .tile:focus-visible .tile-media {
-    border-color: var(--accent);
-  }
-  .tile:focus-visible { outline: none; }
-  .tile-title {
-    display: block;
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    color: var(--ink);
-    line-height: 1.4;
+    height: auto;
+    max-height: min(72vh, 760px);
+    object-fit: contain;
   }
 
-  /* Shared placeholder slot */
-  .slot {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    background: var(--highlight);
+  .item-caption {
+    max-width: 640px;
+    margin-top: 1.25rem;
   }
-  .slot > span {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+  .item-caption h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .item-caption p {
+    font-size: 0.95rem;
     color: var(--muted);
+    line-height: 1.75;
+  }
+  .post-link {
+    display: inline-block;
+    margin-top: 0.9rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  .post-link:hover {
+    border-color: var(--accent);
+    text-decoration: none;
   }
 
   /* Lightbox */
@@ -161,74 +222,83 @@ const items = gallery as GalleryItem[];
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(1rem, 4vw, 3rem);
+    padding: clamp(0.75rem, 3vw, 2rem);
   }
   .lightbox[hidden] { display: none; }
   .lightbox-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(43, 36, 32, 0.55);
+    background: rgba(43, 36, 32, 0.72);
   }
   .lightbox-panel {
     position: relative;
+    display: flex;
+    flex-direction: column;
     background: var(--bg);
     border: 1px solid var(--rule);
-    max-width: 720px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-x: hidden;
-    overflow-y: auto;
+    max-width: 96vw;
+    max-height: 92svh;
+    width: auto;
     margin: 0;
     padding: 0;
+    overflow: hidden;
   }
   .lightbox-close {
     position: absolute;
     top: 0.5rem;
     right: 0.75rem;
-    background: none;
-    border: none;
+    z-index: 1;
+    background: var(--bg);
+    border: 1px solid var(--rule);
     font-size: 1.6rem;
     line-height: 1;
     color: var(--muted);
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 0.15rem 0.6rem;
     transition: color 0.15s;
   }
   .lightbox-close:hover { color: var(--ink); }
-  .lightbox-media { width: 100%; }
+  .lightbox-media {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--highlight);
+  }
   /* The lightbox <img> is injected at runtime by gallery-lightbox.js, so it
-     never receives Astro's scoped-style attribute — the scoped selector
-     ".lightbox-media img" never matched it, which is why the image rendered
-     at full natural size. :global() makes these rules apply. The image scales
-     down to fit within its width (the 720px panel) and its height (the
-     viewport minus room for the caption), preserving aspect ratio. */
+     never receives Astro's scoped-style attribute — :global() reaches it.
+     max-height: 92svh (via the flex-shrunk media area) + object-fit: contain
+     keeps the whole image visible without cropping or a scrollbar. */
   .lightbox-media :global(img) {
     display: block;
     max-width: 100%;
-    max-height: calc(90vh - 12rem);
+    max-height: 100%;
     width: auto;
     height: auto;
+    object-fit: contain;
     margin: 0 auto;
   }
-  .slot-lg { aspect-ratio: 3 / 2; }
   .lightbox-caption {
-    padding: 1.5rem 1.75rem 1.75rem;
+    flex: 0 0 auto;
+    padding: 1.25rem 1.75rem 1.5rem;
   }
   .lightbox-caption h2 {
     font-family: var(--font-display);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: var(--ink);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
   }
   .lightbox-caption p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--muted);
-    line-height: 1.7;
+    line-height: 1.65;
+    max-width: 68ch;
   }
   .lightbox-post {
     display: inline-block;
-    margin-top: 1.1rem;
+    margin-top: 0.9rem;
     font-size: 0.8rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -240,7 +310,7 @@ const items = gallery as GalleryItem[];
   .lightbox-post:hover { border-color: var(--accent); text-decoration: none; }
 
   footer {
-    margin-top: 3rem;
+    margin-top: 4rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--rule);
     font-size: 0.8rem;

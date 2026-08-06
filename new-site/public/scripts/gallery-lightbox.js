@@ -5,22 +5,49 @@ const lbText = document.getElementById("lb-text");
 const lbPost = document.getElementById("lb-post");
 let lastFocused = null;
 
-function openLightbox(tile) {
-  if (!lb || !lbMedia || !lbTitle || !lbText || !lbPost) return;
-  lastFocused = tile;
+function focusableElements() {
+  if (!lb) return [];
+  return Array.from(
+    lb.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])')
+  ).filter((el) => !el.hidden && el.offsetParent !== null);
+}
 
-  const title = tile.dataset.title ?? "";
-  const caption = tile.dataset.caption ?? "";
-  const src = tile.dataset.src ?? "";
-  const post = tile.dataset.post ?? "";
+function trapFocus(e) {
+  if (e.key !== "Tab" || !lb || lb.hidden) return;
+  const focusable = focusableElements();
+  if (focusable.length === 0) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
+function openLightbox(trigger) {
+  if (!lb || !lbMedia || !lbTitle || !lbText || !lbPost) return;
+  lastFocused = trigger;
+
+  const title = trigger.dataset.title ?? "";
+  const caption = trigger.dataset.caption ?? "";
+  const src = trigger.dataset.src ?? "";
+  const alt = trigger.dataset.alt ?? title;
+  const post = trigger.dataset.post ?? "";
 
   lbTitle.textContent = title;
   lbText.textContent = caption;
 
   if (src) {
-    lbMedia.innerHTML = `<img src="${src}" alt="${title.replace(/"/g, "&quot;")}" />`;
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = alt;
+    lbMedia.replaceChildren(img);
   } else {
-    lbMedia.innerHTML = `<span class="slot slot-lg" aria-hidden="true"><span>Image · 3:2</span></span>`;
+    lbMedia.replaceChildren();
   }
 
   if (post) {
@@ -34,17 +61,19 @@ function openLightbox(tile) {
   document.body.style.overflow = "hidden";
   const closeBtn = lb.querySelector(".lightbox-close");
   if (closeBtn) closeBtn.focus();
+  document.addEventListener("keydown", trapFocus);
 }
 
 function closeLightbox() {
   if (!lb) return;
   lb.hidden = true;
   document.body.style.overflow = "";
+  document.removeEventListener("keydown", trapFocus);
   if (lastFocused) lastFocused.focus();
 }
 
-document.querySelectorAll(".tile").forEach((tile) => {
-  tile.addEventListener("click", () => openLightbox(tile));
+document.querySelectorAll(".lightbox-trigger").forEach((trigger) => {
+  trigger.addEventListener("click", () => openLightbox(trigger));
 });
 
 lb?.querySelectorAll("[data-close]").forEach((el) => {
@@ -54,3 +83,26 @@ lb?.querySelectorAll("[data-close]").forEach((el) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && lb && !lb.hidden) closeLightbox();
 });
+
+// Reveal animation: fade + small translate on first scroll into view,
+// then stop watching. Skipped entirely under reduced motion — items are
+// just shown immediately with no transition.
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const revealTargets = document.querySelectorAll(".reveal");
+
+if (reduceMotion || !("IntersectionObserver" in window)) {
+  revealTargets.forEach((el) => el.classList.add("is-visible"));
+} else {
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+  revealTargets.forEach((el) => observer.observe(el));
+}
