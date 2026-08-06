@@ -4,10 +4,15 @@ on:
   push:
     branches:
       - main
+  # Manual fallback for when a push-triggered run fails or never gets
+  # scheduled (e.g. a GitHub Actions outage) — lets a deploy be retried
+  # from the Actions tab instead of needing an empty commit to nudge it.
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
