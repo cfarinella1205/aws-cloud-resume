@@ -168,7 +168,7 @@ import Nav from "../components/Nav.astro";
   section > p {
     font-size: 0.95rem;
     color: var(--muted);
-    max-width: 640px;
+    max-width: 77ch;
   }
 
   .entry { margin-bottom: 1.5rem; }
@@ -265,7 +265,7 @@ import Nav from "../components/Nav.astro";
     border-left: none !important;
     max-width: 100% !important;
     margin: 0 !important;
-    min-height: 0 !important;   /* undo 100vh floor so Edge doesn't spill a blank 2nd page */
+    min-height: 0 !important;   /* undo 100svh floor so Edge doesn't spill a blank 2nd page */
     font-size: 10.5pt;
   }
 
@@ -291,7 +291,7 @@ import Nav from "../components/Nav.astro";
   .entry-date { font-size: 9pt !important; }
   .entry-sub { font-size: 9pt !important; margin-bottom: 0.2rem !important; }
 
-  /* Full printable width — undo the 640px screen reading measure */
+  /* Full printable width — undo the 77ch screen reading measure */
   section > p { max-width: 100% !important; }
   section > p, .project-entry > p { font-size: 9.5pt !important; line-height: 1.45 !important; }
 
