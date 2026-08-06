@@ -44,20 +44,30 @@ const { title, description = "Carson Farinella — IT student, homelab builder, 
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 16px;
+  /* Fluid root: holds at 16px (today's fixed value, unchanged) through
+     ~1440px viewport width, then grows gently, capping at 18px around
+     2560px so it never keeps scaling up on 4K displays. rem floor/ceiling
+     (not px) so it also respects a user's browser default-font-size
+     preference, per WCAG 1.4.4. Everything else in the site is sized in
+     rem/ch relative to this, so the whole layout scales as one object. */
+  font-size: clamp(1rem, 0.84rem + 0.18vw, 1.125rem);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
     body {
-  min-height: 100vh;
+  min-height: 100svh;
   /* Signature: the vertical rule */
   border-left: 3px solid var(--accent);
   padding-left: clamp(2rem, 5vw, 5rem);
   padding-right: clamp(2rem, 5vw, 5rem);
   padding-top: 0;
   padding-bottom: 4rem;
-  max-width: 1200px;
+  /* 75rem = 1200px at the 16px floor above — same container width as
+     before at every viewport where the fluid root sits at its floor,
+     now scaling with the root on wide/high-DPI monitors instead of
+     staying frozen at a fixed pixel width. */
+  max-width: 75rem;
   margin-left: auto;
   margin-right: auto;
 }
