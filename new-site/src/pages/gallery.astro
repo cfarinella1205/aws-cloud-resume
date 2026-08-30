@@ -196,6 +196,24 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
     object-fit: contain;
   }
 
+  /* Mobile: wide console captures are unreadable when scaled to a ~340px column.
+     Hold a legible minimum width and let the frame pan horizontally instead.
+     The lightbox is still there for a full look; this just makes the inline
+     view worth having. 640px matches the shell breakpoint in BaseLayout. */
+  @media (max-width: 640px) {
+    .item-media {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;   /* don't chain the pan to page/history nav */
+    }
+    .item-media::-webkit-scrollbar { height: 6px; }
+    .item-media::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+    .lightbox-trigger :global(img) {
+      min-width: 38rem;                 /* ~608px — legible terminal text */
+      max-height: none;                 /* drop the vh cap; height follows the wider width */
+    }
+  }
+
   .item-caption {
     max-width: 640px;
     margin-top: 1.25rem;
