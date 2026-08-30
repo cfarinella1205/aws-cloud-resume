@@ -221,6 +221,10 @@ import Nav from "../components/Nav.astro";
   .skills-grid {
     grid-template-columns: 1fr;
   }
+  /* space-between + wrap drops the date onto its own line hanging off the right —
+     stack it cleanly under the title instead. */
+  .entry-head { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
+  .entry-date { order: 2; }
 }
   .skill-block strong {
     display: block;

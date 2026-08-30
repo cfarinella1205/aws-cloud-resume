@@ -168,6 +168,11 @@ const formatDate = (date: Date) =>
     padding: 0;
     font-size: inherit;
   }
+  /* Ease padding and type size on phones so code blocks don't dominate the column
+     (they already scroll horizontally via overflow-x above). */
+  @media (max-width: 640px) {
+    .prose :global(pre) { padding: 1rem 1.1rem; font-size: 0.8rem; border-radius: 3px; }
+  }
   .prose :global(blockquote) {
     border-left: 3px solid var(--accent);
     padding-left: 1.25rem;

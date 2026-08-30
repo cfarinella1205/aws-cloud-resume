@@ -73,7 +73,7 @@ import Nav from "../components/Nav.astro";
   }
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(3.5rem, 10vw, 6.5rem);
+    font-size: clamp(2.75rem, 10vw, 6.5rem);   /* was 3.5rem floor — precautionary headroom at 320px, no change above ~440px */
     font-weight: 300;
     line-height: 1.0;
     letter-spacing: -0.02em;
@@ -126,6 +126,13 @@ import Nav from "../components/Nav.astro";
     color: var(--muted);
     line-height: 1.7;
   }
+  /* Stack the label above its paragraph on phones — the 7.5rem label column
+     otherwise squeezes body copy to ~117px (about 15 characters a line). */
+  @media (max-width: 640px) {
+    .project-list li { grid-template-columns: 1fr; gap: 0.35rem; }
+    .project-label   { padding-top: 0; }
+    .project-list    { gap: 2rem; }
+  }
 
   .cta-row {
   display: flex;
@@ -170,6 +177,12 @@ import Nav from "../components/Nav.astro";
   white-space: nowrap;
   transition: color 0.15s, border-color 0.15s;
 }
+
+  /* Three actions as a deliberate vertical list instead of "two on a line,
+     Get-in-touch orphaned below". */
+  @media (max-width: 480px) {
+    .cta-row { flex-direction: column; align-items: flex-start; gap: 1.1rem; }
+  }
 
   footer {
     font-size: 0.8rem;
