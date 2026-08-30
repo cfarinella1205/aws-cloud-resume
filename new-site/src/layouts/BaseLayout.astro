@@ -72,6 +72,17 @@ const { title, description = "Carson Farinella — IT student, homelab builder, 
   margin-right: auto;
 }
 
+    /* Mobile shell: at 320px the 2rem gutters + 3px rule eat ~67px of width and
+       the rule sits glued to the screen edge. Reclaim ~25px, keep the signature. */
+    @media (max-width: 640px) {
+      body {
+        border-left-width: 2px;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-bottom: 3rem;
+      }
+    }
+
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; text-underline-offset: 3px; }
 

@@ -57,7 +57,27 @@ const currentPath = Astro.url.pathname;
     display: flex;
     gap: 1.25rem;
   }
+  /* External links leave the site — mark them, don't let them read as another tab */
+  .external-group a::after {
+    content: "\2197";                 /* ↗ */
+    display: inline-block;
+    margin-left: 0.3em;
+    font-size: 0.8em;
+    transform: translateY(-0.05em);
+    opacity: 0.75;
+  }
+  @media (max-width: 640px) {
+    nav ul { gap: 0.9rem 1.15rem; }   /* tighten the wrap */
+  }
   @media (max-width: 520px) {
-    .external-group { margin-left: 0; }
+    /* Wrapped group sits below a hairline (the site's divider) so the line break looks intentional */
+    .external-group {
+      margin-left: 0;
+      width: 100%;
+      gap: 1.25rem;
+      border-top: 1px solid var(--rule);
+      margin-top: 0.55rem;
+      padding-top: 0.9rem;
+    }
   }
 </style>
