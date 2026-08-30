@@ -2,51 +2,67 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 ---
-<BaseLayout title="Resume — Carson Farinella" description="Carson Farinella's resume — IT student, cloud enthusiast, aspiring solutions architect.">
+<BaseLayout title="Resume — Carson Farinella" description="Carson Farinella's resume — Senior IT student focused on cloud infrastructure, automation, and DevOps.">
   <Nav />
 
-  <main>
+  <main class="resume">
     <header class="page-header">
-      <h1>Resume</h1>
+      <h1>Carson Farinella</h1>
       <div class="header-links">
+        <span>Miami, FL</span>
+        <span class="sep">·</span>
         <a href="mailto:cfarinella1205@outlook.com">cfarinella1205@outlook.com</a>
         <span class="sep">·</span>
-        <a href="https://linkedin.com/in/carson-farinella" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://linkedin.com/in/carson-farinella" target="_blank" rel="noopener">linkedin.com/in/carson-farinella</a>
         <span class="sep">·</span>
-        <a href="https://github.com/cfarinella1205" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/cfarinella1205" target="_blank" rel="noopener">github.com/cfarinella1205</a>
         <span class="sep">·</span>
-        <span>Miami, FL</span>
+        <a href="https://carsonfarinella.com">carsonfarinella.com</a>
       </div>
     </header>
 
     <section>
-      <h2>Summary</h2>
+      <h2>Professional Summary</h2>
       <p>
-        Senior Information Technology student at <strong>Florida International University</strong>
-        and active member of the <strong>FIU AWS Cloud Club</strong>. Driven by a fascination for high-availability
-        systems and low-cost deployment, currently seeking <strong>opportunities in software engineering and cloud
-        infrastructure</strong> to apply my foundation in networking and automation to
-        enterprise-level challenges. Proven ability to translate complex technical requirements into functional
-        cloud solutions.
+        Senior Information Technology student at <strong>Florida International University</strong> specializing in
+        cloud infrastructure, automation, and DevOps practices. Hands-on experience designing serverless architectures
+        on AWS, implementing CI/CD pipelines, and managing containerized and networked homelab environments. Active
+        <strong>AWS Cloud Club</strong> member pursuing dual AWS certifications, with demonstrated leadership in Agile
+        development. Targeting cloud and DevOps engineering roles at large-scale, high-growth technology organizations.
       </p>
     </section>
 
     <section>
-      <h2>Education & Leadership</h2>
+      <h2>Education</h2>
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-title">B.S. in Information Technology</span>
+          <span class="entry-title">Florida International University (FIU)</span>
           <span class="entry-date">Expected Dec 2026</span>
         </div>
-        <div class="entry-sub">Florida International University (FIU)</div>
-        <p><strong>Member:</strong> FIU AWS Cloud Club (Inaugural Term – Present)</p>
+        <div class="entry-sub">B.S. in Information Technology</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Activities &amp; Leadership</h2>
+      <div class="entry">
+        <div class="entry-head">
+          <span class="entry-title">FIU AWS Cloud Club — Member</span>
+          <span class="entry-date">Inaugural Term – Present</span>
+        </div>
       </div>
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-title">Team Lead & Scrum Master — Senior Capstone II</span>
+          <span class="entry-title">Senior Capstone II — Team Lead &amp; Scrum Master</span>
           <span class="entry-date">Summer 2026</span>
         </div>
-        <p>Led a student development team through five Agile sprints to design and build a role-based access control (RBAC) server on an accelerated summer timeline.</p>
+        <ul>
+          <li>
+            Led a 5-person Agile team through five sprints to design and deliver a centralized RBAC identity server
+            in Go and PostgreSQL, featuring RS256 JWT authentication, bcrypt password hashing, and least-privilege
+            Docker container networking across 3 containers and 2 isolated networks, with zero secrets in source control.
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -55,16 +71,16 @@ import Nav from "../components/Nav.astro";
       <div class="entry">
         <div class="entry-head">
           <span class="entry-title">AWS Certified Solutions Architect – Associate (SAA-C03)</span>
-          <span class="entry-date">Expected Dec 2026</span>
+          <span class="entry-date">In Progress – Expected Dec 2026</span>
         </div>
-        <div class="entry-sub">Amazon Web Services · <em>In Progress</em></div>
+        <div class="entry-sub">Amazon Web Services</div>
       </div>
       <div class="entry">
         <div class="entry-head">
           <span class="entry-title">AWS Certified Cloud Practitioner (CLF-C02)</span>
-          <span class="entry-date">Expected Sept 2026</span>
+          <span class="entry-date">In Progress – Expected Sept 2026</span>
         </div>
-        <div class="entry-sub">Amazon Web Services · <em>In Progress</em></div>
+        <div class="entry-sub">Amazon Web Services</div>
       </div>
     </section>
 
@@ -73,44 +89,63 @@ import Nav from "../components/Nav.astro";
       <div class="entry project-entry">
         <div class="entry-head">
           <span class="entry-title">AWS Cloud Resume Challenge</span>
-          <span class="entry-date">Completed</span>
         </div>
-        <p>Serverless resume website demonstrating full-stack cloud competency and automated deployment.</p>
+        <ul>
+          <li>
+            Deployed a fully serverless resume website on AWS using S3, CloudFront, Route 53, Lambda, and DynamoDB,
+            demonstrating end-to-end cloud infrastructure ownership.
+          </li>
+          <li>
+            Automated deployments via a GitHub Actions CI/CD pipeline invoking AWS SAM for infrastructure as code,
+            enabling repeatable and version-controlled releases.
+          </li>
+          <li>
+            Served through a dual-CDN edge network (CloudFront and Cloudflare) with sub-second response times in production.
+          </li>
+        </ul>
       </div>
       <div class="entry project-entry">
         <div class="entry-head">
-          <span class="entry-title">Home Server & Homelab</span>
-          <span class="entry-date">In Progress</span>
+          <span class="entry-title">Home Server &amp; Homelab</span>
         </div>
-        <p>Multi-device homelab running Home Assistant Core, a local LLM agent (Hermes), and containerized services via Docker, connected to the public internet through a Cloudflare Tunnel with no open router ports.</p>
+        <ul>
+          <li>
+            Architected a multi-device homelab environment running Home Assistant Core, a local LLM agent (Hermes),
+            and containerized services managed via Docker.
+          </li>
+          <li>
+            Engineered zero-open-port public internet access using a Cloudflare Tunnel, applying zero-trust networking
+            principles to a self-hosted infrastructure stack.
+          </li>
+        </ul>
       </div>
     </section>
 
     <section>
-  <h2>Technical Skills</h2>
-  <div class="skills-grid">
-    <div class="skill-block">
-      <strong>Languages</strong>
-      <p>Python, JavaScript, HTML, CSS, Java, Bash</p>
-    </div>
-    <div class="skill-block">
-      <strong>Cloud & Infrastructure</strong>
-      <p>AWS (S3, CloudFront, Route 53, Lambda, DynamoDB), Infrastructure as Code (AWS SAM), CI/CD Pipelines, Docker</p>
-    </div>
-    <div class="skill-block">
-      <strong>Networking & Security</strong>
-      <p>TCP/IP, DNS, Network Architecture, Network Security, Cybersecurity Fundamentals, Cloudflare Tunnel, SSH</p>
-    </div>
-    <div class="skill-block">
-      <strong>Systems & Tools</strong>
-      <p>Linux, Android (Termux/proot), Git/GitHub, VS Code, Home Assistant, Local LLM deployment</p>
-    </div>
-    <div class="skill-block">
-      <strong>Data & Automation</strong>
-      <p>Database Administration, IT Automation, Scripting</p>
-    </div>
-  </div>
-</section>
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-block">
+          <strong>Cloud &amp; Infrastructure</strong>
+          <p>AWS (S3, CloudFront, Route 53, Lambda, DynamoDB), Infrastructure as Code (AWS SAM), CI/CD Pipelines (GitHub Actions), Docker</p>
+        </div>
+        <div class="skill-block">
+          <strong>Networking &amp; Security</strong>
+          <p>TCP/IP, DNS, Network Architecture, Network Security, Cybersecurity Fundamentals, Cloudflare Tunnel, SSH</p>
+        </div>
+        <div class="skill-block">
+          <strong>Languages</strong>
+          <p>Python, Bash, Go, JavaScript, HTML, CSS, Java</p>
+        </div>
+        <div class="skill-block">
+          <strong>Systems &amp; Tools</strong>
+          <p>Linux, Git/GitHub, PostgreSQL, Docker Compose, Home Assistant, Local LLM Deployment, Android (Termux/proot), VS Code</p>
+        </div>
+        <div class="skill-block">
+          <strong>Data &amp; Automation</strong>
+          <p>IT Automation, Scripting, Database Administration</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -146,7 +181,7 @@ import Nav from "../components/Nav.astro";
   gap: 0.15rem 0;
   align-items: center;
 }
-.header-links a { color: var(--accent); white-space: nowrap; }
+.header-links a { color: var(--accent); word-break: break-word; }
 .sep { margin: 0 0.4rem; color: var(--rule); flex-shrink: 0; }
 
   section {
@@ -259,65 +294,87 @@ import Nav from "../components/Nav.astro";
     line-height: 1;
   }
 
-   @media print {
-  @page { margin: 0.6in; }
+  /* ---------------------------------------------------------------------------
+     Print: render this page as the ATS-ready resume PDF. Strip the site chrome,
+     drop to black-on-white, and tighten to a compact one/two-page document. The
+     visible content already matches the ATS resume, so print just restyles it.
+     --------------------------------------------------------------------------- */
+  @media print {
+  @page { margin: 0.5in; }
 
   nav { display: none !important; }
 
   body {
     background: white !important;
+    color: #000 !important;
     padding: 0 !important;
     border-left: none !important;
     max-width: 100% !important;
     margin: 0 !important;
     min-height: 0 !important;   /* undo 100svh floor so Edge doesn't spill a blank 2nd page */
-    font-size: 10.5pt;
+    font-size: 10pt;
   }
 
   main { padding-bottom: 0 !important; }
 
+  .resume, .resume * { color: #000 !important; }
+
   .page-header {
-    padding-bottom: 0.6rem !important;
-    margin-bottom: 0.9rem !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 0.8rem !important;
+    border-bottom: 1px solid #000 !important;
   }
   .page-header h1 {
-    font-size: 22pt !important;
-    margin-bottom: 0.35rem !important;
+    font-size: 21pt !important;
+    font-weight: 400 !important;
+    margin-bottom: 0.3rem !important;
   }
+  .header-links { font-size: 8.5pt !important; gap: 0 !important; }
+  .header-links a { text-decoration: none !important; }
+  .sep { color: #000 !important; }
 
   h2 {
-    font-size: 8pt !important;
-    border-bottom: 1px solid #ccc !important;
-    color: #000 !important;
+    font-size: 8.5pt !important;
+    letter-spacing: 0.1em !important;
+    border-bottom: 1px solid #999 !important;
+    padding-bottom: 2pt !important;
     margin-bottom: 0.5rem !important;
+    break-after: avoid;
+    page-break-after: avoid;
   }
 
-  .entry-title { font-size: 10.5pt !important; }
+  .entry-title { font-size: 10pt !important; }
   .entry-date { font-size: 9pt !important; }
-  .entry-sub { font-size: 9pt !important; margin-bottom: 0.2rem !important; }
+  .entry-sub { font-size: 9pt !important; margin-bottom: 0.15rem !important; }
 
   /* Full printable width — undo the 77ch screen reading measure */
-  section > p { max-width: 100% !important; }
-  section > p, .project-entry > p { font-size: 9.5pt !important; line-height: 1.45 !important; }
+  section > p { max-width: 100% !important; font-size: 9.5pt !important; line-height: 1.4 !important; }
+
+  .entry ul, .project-entry ul {
+    margin-top: 0.25rem !important;
+    font-size: 9pt !important;
+    line-height: 1.4 !important;
+  }
+  .entry ul li, .project-entry ul li { margin-bottom: 0.15rem !important; }
 
   section {
     border-bottom: none !important;
-    margin-bottom: 0.7rem !important;
+    margin-bottom: 0.65rem !important;
     padding-bottom: 0 !important;
     page-break-inside: auto;   /* allow a section to flow across a break */
   }
 
   /* Keep the small, atomic units from splitting instead of whole sections */
   .entry, .project-entry, .skill-block { page-break-inside: avoid; }
-  .entry { margin-bottom: 0.6rem !important; }
+  .entry { margin-bottom: 0.45rem !important; }
 
   .skills-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 0.4rem 0.75rem !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.35rem 0.9rem !important;
   }
 
-  .skill-block strong { font-size: 8pt !important; margin-bottom: 0.15rem !important; }
-  .skill-block p { font-size: 9pt !important; line-height: 1.4 !important; }
+  .skill-block strong { font-size: 8.5pt !important; margin-bottom: 0.1rem !important; }
+  .skill-block p { font-size: 9pt !important; line-height: 1.35 !important; }
 
   footer { display: none !important; }
 
