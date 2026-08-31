@@ -2,7 +2,7 @@
 title: "The AWS Cloud Resume Challenge"
 date: 2026-08-30T18:42:24Z
 description: "Taking the initial plunge into AWS. The problems I faced, what they taught me, and where it has led."
-tags: ["AWS","IaC","devlog","Networking","Serverless"]
+tags: ["aws","IaC","devlog","networking","serverless"]
 draft: false
 ---
 
