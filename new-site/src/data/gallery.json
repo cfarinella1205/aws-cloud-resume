@@ -19,8 +19,8 @@
     "id": "astro",
     "order": "03",
     "title": "Before & After — Moving to Astro",
-    "caption": "Retiring the hand-rolled static site for a real build pipeline: git push triggers a GitHub Actions Astro build, deploying only the build output to S3 behind CloudFront.",
-    "alt": "GitHub Actions run for the Deploy Resume Website workflow, showing every step succeeding — checkout, Node setup, dependency install, Astro build, AWS credential configuration, sync to S3, CloudFront invalidation, and a Cloudflare cache purge — completing in 24 seconds.",
+    "caption": "The first version was hand-written HTML and CSS with no build step — every page a copy-paste of the last. The rebuild moved it onto Astro components and content collections, with a GitHub Actions build that compiles the site and deploys the output to the same S3 and CloudFront.",
+    "alt": "Side-by-side comparison of the site before and after the Astro rebuild. Left: the original resume, a single centered white card on a grey page, built from one hand-coded HTML file. Right: the current site, a wide editorial layout with a large Fraunces serif wordmark and a working-notes section, built from Astro components and deployed by a GitHub Actions pipeline.",
     "post": "rebuilding-this-site-on-astro-and-why-the-old-one-had-to-go"
   }
 ]
