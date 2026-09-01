@@ -13,7 +13,7 @@
     "title": "AWS Cloud Resume — S3 Bucket",
     "caption": "The S3 bucket this site deploys to, showing the actual build output: 404 page, blog and resume folders, sitemaps, and the Astro built index.html, all served through CloudFront.",
     "alt": "AWS S3 console showing the carsonfarinella.com bucket's root objects: 404.html, blog/, favicon.ico, favicon.svg, gallery/, images/, index.html, resume/, scripts/, sitemap-0.xml, sitemap-index.xml, and workbench/ — the actual build output this site deploys from.",
-    "post": ""
+    "post": "the-aws-cloud-resume-challenge"
   },
   {
     "id": "astro",
