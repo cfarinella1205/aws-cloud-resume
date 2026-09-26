@@ -7,18 +7,20 @@ import gallery from "../data/gallery.json";
 import rbacImg from "../assets/gallery/rbac-terminal-log.png";
 import awsImg from "../assets/gallery/aws-s3-bucket-objects.png";
 import astroImg from "../assets/gallery/before-after-astro.png";
+import birdcageImg from "../assets/gallery/birdcage-domain-observer.png";
 
 type GalleryItem = {
-  id: "rbac" | "aws" | "astro";
+  id: "rbac" | "aws" | "astro" | "birdcage";
   order: string;
   title: string;
   caption: string;
   alt: string;
-  post: string;
+  post?: string;
+  portrait?: boolean;   // phone screenshots: shown at phone width, centered
 };
 
 const items = gallery as GalleryItem[];
-const sourceImages = { rbac: rbacImg, aws: awsImg, astro: astroImg };
+const sourceImages = { rbac: rbacImg, aws: awsImg, astro: astroImg, birdcage: birdcageImg };
 
 // The lightbox shows a single full-resolution frame rather than the
 // responsive <Image> srcset used inline, so precompute one large AVIF
@@ -51,7 +53,7 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
             <h2 id={`item-title-${item.id}`}>{item.title}</h2>
           </div>
 
-          <div class="item-media">
+          <div class={item.portrait ? "item-media is-portrait" : "item-media"}>
             <button
               class="lightbox-trigger"
               type="button"
@@ -195,6 +197,14 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
     object-fit: contain;
   }
 
+  /* Phone screenshots: full column width would blow a portrait capture up to
+     ~2x its native size — hold it at phone width, centered in the frame. */
+  .item-media.is-portrait .lightbox-trigger :global(img) {
+    width: min(100%, 26rem);
+    max-height: none;
+    margin: 0 auto;
+  }
+
   /* Mobile: wide console captures are unreadable when scaled to a ~340px column.
      Hold a legible minimum width and let the frame pan horizontally instead.
      The lightbox is still there for a full look; this just makes the inline
@@ -211,6 +221,8 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
       min-width: 38rem;                 /* ~608px — legible terminal text */
       max-height: none;                 /* drop the vh cap; height follows the wider width */
     }
+    /* A portrait capture already fits the column — no horizontal pan. */
+    .item-media.is-portrait .lightbox-trigger :global(img) { min-width: 0; }
   }
 
   .item-caption {
