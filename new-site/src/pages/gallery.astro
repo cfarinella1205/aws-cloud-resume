@@ -75,6 +75,7 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
                 width={sourceImages[item.id].width}
                 height={sourceImages[item.id].height}
               />
+              <span class="expand-hint" aria-hidden="true">Tap to expand</span>
             </button>
           </div>
 
@@ -99,8 +100,12 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
     <figure class="lightbox-panel">
       <button class="lightbox-close" type="button" aria-label="Close" data-close>&times;</button>
       <div class="lightbox-media" id="lb-media"></div>
+      <span class="pan-hint" aria-hidden="true">Swipe to pan &rarr;</span>
       <figcaption class="lightbox-caption">
-        <h2 id="lb-title"></h2>
+        <div class="lightbox-caption-head">
+          <h2 id="lb-title"></h2>
+          <button class="lightbox-caption-toggle" type="button" aria-expanded="false" aria-controls="lb-text">Caption</button>
+        </div>
         <p id="lb-text"></p>
         <a id="lb-post" class="lightbox-post" href="#" hidden>Read the post &rarr;</a>
       </figcaption>
@@ -214,25 +219,8 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
     margin: 0 auto;
   }
 
-  /* Mobile: wide console captures are unreadable when scaled to a ~340px column.
-     Hold a legible minimum width and let the frame pan horizontally instead.
-     The lightbox is still there for a full look; this just makes the inline
-     view worth having. 640px matches the shell breakpoint in BaseLayout. */
-  @media (max-width: 640px) {
-    .item-media {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior-x: contain;   /* don't chain the pan to page/history nav */
-    }
-    .item-media::-webkit-scrollbar { height: 6px; }
-    .item-media::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
-    .lightbox-trigger :global(img) {
-      min-width: 38rem;                 /* ~608px — legible terminal text */
-      max-height: none;                 /* drop the vh cap; height follows the wider width */
-    }
-    /* A portrait capture already fits the column — no horizontal pan. */
-    .item-media.is-portrait .lightbox-trigger :global(img) { min-width: 0; }
-  }
+  /* Only the phone layout shows this; see the mobile block below. */
+  .expand-hint { display: none; }
 
   .item-caption {
     max-width: 640px;
@@ -323,6 +311,8 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
   .lightbox-caption {
     padding: 1.25rem 1.75rem 1.5rem;
   }
+  .lightbox-caption-toggle,
+  .pan-hint { display: none; }
   .lightbox-caption h2 {
     font-family: var(--font-display);
     font-size: 1.2rem;
@@ -348,6 +338,138 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
   }
   .lightbox-post[hidden] { display: none; }
   .lightbox-post:hover { border-color: var(--accent); text-decoration: none; }
+
+  /* ---------------------------------------------------------------------------
+     Phone (≤640px). Inline images are fit-to-width previews with a "tap to
+     expand" badge; the lightbox becomes a full-screen viewer that shows the
+     image at the viewer's full height and pans sideways, so a wide console
+     capture is actually readable. Nothing here applies above 640px — the
+     desktop gallery and lightbox are unchanged.
+     --------------------------------------------------------------------------- */
+  @media (max-width: 640px) {
+    .item-heading h2 { font-size: 1.25rem; line-height: 1.25; }
+    .lightbox-trigger { position: relative; }
+    .lightbox-trigger :global(img) { max-height: none; }
+    .expand-hint {
+      display: block;
+      position: absolute;
+      right: 0.5rem;
+      bottom: 0.5rem;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: rgba(43, 36, 32, 0.78);
+    }
+    .item-caption p { font-size: 1rem; }
+
+    .lightbox { padding: 0; }
+    .lightbox-panel {
+      width: 100%;
+      height: 100vh;                    /* fallback */
+      height: 100dvh;                   /* tracks the collapsing mobile URL bar */
+      max-width: none;
+      max-height: none;
+      border: 0;
+    }
+    .lightbox-close {
+      top: 0.6rem;
+      right: 0.6rem;
+      width: 2.75rem;                   /* 44px tap target */
+      height: 2.75rem;
+      padding: 0;
+      font-size: 1.9rem;
+      color: var(--ink);
+      box-shadow: 0 1px 6px rgba(43, 36, 32, 0.18);
+    }
+    /* The media area stops where the collapsed caption bar starts. --cap-h is
+       that bar's measured height, set by gallery-lightbox.js on open; opening
+       the caption then slides it up *over* the image instead of shrinking it. */
+    .lightbox-media {
+      height: calc(100% - var(--cap-h, 5rem));
+      display: block;                   /* flex centering would clip the left edge of an overflowing image */
+      overflow: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    /* Fill the viewer's height; a wide capture overflows sideways and pans. */
+    .lightbox-media :global(img) {
+      height: 100%;
+      width: auto;
+      max-width: none;
+      max-height: none;
+      margin: 0 auto;                   /* centers a portrait capture that fits */
+    }
+    .pan-hint {
+      position: absolute;
+      left: 50%;
+      top: 0.9rem;
+      transform: translateX(-50%);
+      padding: 0.35rem 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: rgba(43, 36, 32, 0.78);
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .lightbox-panel.can-pan .pan-hint {
+      display: block;
+      animation: pan-hint-out 0.4s ease 3s forwards;   /* gets out of the way on its own */
+    }
+    .lightbox-panel.has-panned .pan-hint { opacity: 0; }
+    @keyframes pan-hint-out { to { opacity: 0; } }
+
+    .lightbox-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-height: 70%;
+      overflow-y: auto;
+      padding: 0.6rem 1.25rem calc(0.9rem + env(safe-area-inset-bottom));
+      background: var(--bg);
+      border-top: 1px solid var(--rule);
+    }
+    .lightbox-panel.is-caption-open .lightbox-caption {
+      box-shadow: 0 -8px 24px rgba(43, 36, 32, 0.16);
+    }
+    .lightbox-caption-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .lightbox-caption h2 { font-size: 1.15rem; line-height: 1.3; margin-bottom: 0; }
+    .lightbox-caption-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35em;
+      flex-shrink: 0;
+      min-height: 2.75rem;
+      background: none;
+      border: 0;
+      font: inherit;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      cursor: pointer;
+    }
+    .lightbox-caption-toggle::after { content: "\25B4"; }                        /* ▴ drawer opens upward */
+    .lightbox-caption-toggle[aria-expanded="true"]::after { content: "\25BE"; }  /* ▾ */
+    /* Collapsed by default so the image gets the screen; the same caption is
+       already on the page right under the thumbnail. */
+    .lightbox-caption p,
+    .lightbox-post { display: none; }
+    .lightbox-panel.is-caption-open .lightbox-caption p { display: block; margin-top: 0.5rem; font-size: 1rem; }
+    .lightbox-panel.is-caption-open .lightbox-post:not([hidden]) { display: inline-block; }
+  }
 
   footer {
     margin-top: 4rem;
