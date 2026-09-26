@@ -3,8 +3,33 @@ interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  /** Title for social cards; defaults to `title`. og:site_name already carries the name. */
+  ogTitle?: string;
+  /** "article" for blog posts; everything else is a "website". */
+  ogType?: "website" | "article";
+  /** Site-relative path to a 1200x630 image in public/. */
+  ogImage?: string;
+  ogImageAlt?: string;
+  /** Blog posts only — emitted as article:published_time. */
+  publishedTime?: Date;
 }
-const { title, description = "Carson Farinella — IT student, homelab builder, aspiring solutions architect.", noindex = false } = Astro.props;
+const {
+  title,
+  description = "Carson Farinella — IT student, homelab builder, aspiring solutions architect.",
+  noindex = false,
+  ogTitle = title,
+  ogType = "website",
+  ogImage = "/og-default.png",
+  ogImageAlt = "Carson Farinella — Cloud & network engineering · carsonfarinella.com",
+  publishedTime,
+} = Astro.props;
+
+// Canonical URL: always https://carsonfarinella.com with a trailing slash.
+// S3 serves /resume/ directly but 302s /resume, so the slashed form is the
+// one scrapers and search engines should settle on.
+const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonical = new URL(path, Astro.site).href;
+const ogImageUrl = new URL(ogImage, Astro.site).href;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -21,8 +46,29 @@ const { title, description = "Carson Farinella — IT student, homelab builder, 
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex, nofollow" />}
   <title>{title}</title>
+  {!noindex && <link rel="canonical" href={canonical} />}
+
+  {/* Open Graph + Twitter card: LinkedIn, Slack, Teams, iMessage, X all read these. */}
+  <meta property="og:site_name" content="Carson Farinella" />
+  <meta property="og:title" content={ogTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={ogImageAlt} />
+  {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={ogTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
+  <meta name="twitter:image:alt" content={ogImageAlt} />
+
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />

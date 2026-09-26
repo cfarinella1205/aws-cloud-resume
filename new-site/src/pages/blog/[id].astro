@@ -18,7 +18,13 @@ const { Content } = await render(post);
 const formatDate = (date: Date) =>
   date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 ---
-<BaseLayout title={`${post.data.title} — Carson Farinella`} description={post.data.description}>
+<BaseLayout
+  title={`${post.data.title} — Carson Farinella`}
+  description={post.data.description}
+  ogTitle={post.data.title}
+  ogType="article"
+  publishedTime={post.data.date}
+>
   <Nav />
 
   <main>
