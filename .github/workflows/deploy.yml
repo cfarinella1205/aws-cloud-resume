@@ -27,6 +27,12 @@ jobs:
           cd new-site
           npm ci
 
+      # Headless Chromium prints /resume to dist/resume.pdf during the build.
+      - name: Install Playwright Chromium
+        run: |
+          cd new-site
+          npx playwright install --with-deps chromium
+
       - name: Build Astro Site
         run: |
           cd new-site

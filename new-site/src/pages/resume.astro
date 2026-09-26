@@ -19,6 +19,7 @@ import Nav from "../components/Nav.astro";
         <span class="sep">·</span>
         <a href="https://carsonfarinella.com">carsonfarinella.com</a>
       </div>
+      <a class="pdf-download" href="/resume.pdf" download="Carson-Farinella-Resume.pdf">Download PDF</a>
     </header>
 
     <section>
@@ -204,6 +205,21 @@ import Nav from "../components/Nav.astro";
 }
 .header-links a { color: var(--accent); word-break: break-word; }
 .sep { margin: 0 0.4rem; color: var(--rule); flex-shrink: 0; }
+
+  /* resume.pdf is generated at build time from this page's print styles
+     (scripts/build-resume-pdf.mjs), so the download always matches. */
+  .pdf-download {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+  }
+  .pdf-download:hover { background: var(--accent); color: var(--bg); }
 
   section {
     margin-bottom: 2.5rem;
@@ -409,6 +425,7 @@ import Nav from "../components/Nav.astro";
   .cert-issuer { display: none !important; }
 
   footer { display: none !important; }
+  .pdf-download { display: none !important; }
 
   a { color: #000 !important; text-decoration: none !important; }
 }
