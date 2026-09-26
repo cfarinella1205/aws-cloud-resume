@@ -38,7 +38,8 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   {/* Content-Security-Policy (defense-in-depth; version-controlled).
       frame-ancestors is intentionally omitted — it is ignored in a <meta> tag and
-      is instead enforced via the X-Frame-Options response header at Cloudflare. */}
+      only works as a response header (X-Frame-Options / CSP), which would have
+      to be set at Cloudflare; this static site can't send headers itself. */}
   <meta
     http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://sg47t70dpa.execute-api.us-east-1.amazonaws.com; base-uri 'self'; form-action 'self';"

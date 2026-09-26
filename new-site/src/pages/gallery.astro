@@ -110,6 +110,15 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
 
 <script is:inline defer src="/scripts/gallery-lightbox.js"></script>
 
+<!-- Items start hidden and gallery-lightbox.js fades them in. Without JS they'd
+     stay invisible, so show them outright. is:inline keeps Astro from scoping
+     this; !important beats the scoped .gallery-item[data-astro-cid] rule. -->
+<noscript>
+  <style is:inline>
+    .gallery-item { opacity: 1 !important; transform: none !important; }
+  </style>
+</noscript>
+
 <style>
   .page-header {
     padding-bottom: 2rem;
