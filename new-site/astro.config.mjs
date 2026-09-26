@@ -13,6 +13,11 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'always'
   },
+  // Old post URLs that have been shared, kept alive after a slug change.
+  redirects: {
+    '/blog/leading-a-capstone-team-to-ship--showcase-a-real-rbac-server':
+      '/blog/leading-a-capstone-team-to-ship-and-showcase-a-real-rbac-server/',
+  },
   integrations: [
     sitemap({
       // /workbench/* is built into dist/ but excluded from the public S3 sync

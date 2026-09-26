@@ -36,8 +36,9 @@ else
   TAGS="[$(IFS=,; echo "${QUOTED_TAGS[*]}")]"
 fi
 
-# Sanitize the title for a filename (lowercase, replace spaces with hyphens)
-FILENAME=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g' | sed 's/[^a-z0-9-]//g')
+# Sanitize the title for a filename (lowercase, "&" -> "and", spaces to hyphens,
+# then collapse runs of hyphens so stripped punctuation can't leave "--" behind)
+FILENAME=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/&/and/g' | sed 's/ /-/g' | sed 's/[^a-z0-9-]//g' | sed 's/--*/-/g; s/^-//; s/-$//')
 DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
 FILEPATH="${SITE_ROOT}/src/content/blog/${FILENAME}.md"
 
