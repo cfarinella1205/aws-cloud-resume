@@ -7,13 +7,17 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/build-resume-pdf.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build:site": "astro build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^6.4.7",
     "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
   }
 }
