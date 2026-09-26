@@ -3,6 +3,8 @@ const lbMedia = document.getElementById("lb-media");
 const lbTitle = document.getElementById("lb-title");
 const lbText = document.getElementById("lb-text");
 const lbPost = document.getElementById("lb-post");
+const lbPanel = lb?.querySelector(".lightbox-panel");
+const lbCaptionToggle = lb?.querySelector(".lightbox-caption-toggle");
 let lastFocused = null;
 
 function focusableElements() {
@@ -41,10 +43,17 @@ function openLightbox(trigger) {
   lbTitle.textContent = title;
   lbText.textContent = caption;
 
+  // Phone viewer state (the toggle and pan hint are only displayed at <=640px):
+  // caption starts collapsed, pan hint shows until the first sideways swipe.
+  lbPanel?.classList.remove("is-caption-open", "can-pan", "has-panned");
+  lbCaptionToggle?.setAttribute("aria-expanded", "false");
+  lbMedia.scrollLeft = 0;
+
   if (src) {
     const img = document.createElement("img");
     img.src = src;
     img.alt = alt;
+    img.addEventListener("load", updatePanHint);
     lbMedia.replaceChildren(img);
   } else {
     lbMedia.replaceChildren();
@@ -59,10 +68,41 @@ function openLightbox(trigger) {
 
   lb.hidden = false;
   document.body.style.overflow = "hidden";
+  measureCaption();
   const closeBtn = lb.querySelector(".lightbox-close");
   if (closeBtn) closeBtn.focus();
   document.addEventListener("keydown", trapFocus);
 }
+
+// Size the media area to end where the collapsed caption bar begins, so
+// opening the caption overlays the image rather than shrinking it.
+function measureCaption() {
+  const caption = lb?.querySelector(".lightbox-caption");
+  if (lbPanel && caption) lbPanel.style.setProperty("--cap-h", `${caption.offsetHeight}px`);
+}
+
+// Rotation re-wraps the caption title: collapse and re-measure.
+window.addEventListener("resize", () => {
+  if (!lb || lb.hidden) return;
+  lbPanel?.classList.remove("is-caption-open");
+  lbCaptionToggle?.setAttribute("aria-expanded", "false");
+  measureCaption();
+  updatePanHint();
+});
+
+function updatePanHint() {
+  if (!lbPanel || !lbMedia) return;
+  lbPanel.classList.toggle("can-pan", lbMedia.scrollWidth > lbMedia.clientWidth + 1);
+}
+
+lbMedia?.addEventListener("scroll", () => {
+  if (lbMedia.scrollLeft > 8) lbPanel?.classList.add("has-panned");
+}, { passive: true });
+
+lbCaptionToggle?.addEventListener("click", () => {
+  const open = lbPanel?.classList.toggle("is-caption-open") ?? false;
+  lbCaptionToggle.setAttribute("aria-expanded", String(open));
+});
 
 function closeLightbox() {
   if (!lb) return;
