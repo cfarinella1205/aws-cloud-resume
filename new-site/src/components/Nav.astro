@@ -7,8 +7,16 @@ const links = [
 ];
 const currentPath = Astro.url.pathname;
 ---
-<nav>
-  <ul>
+<nav id="site-nav">
+  <!-- Phone-only bar (≤640px): wordmark + menu button. display:none on desktop. -->
+  <div class="bar">
+    <a class="wordmark" href="/">Carson <em>Farinella</em></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span class="menu-label">Menu</span>
+      <span class="menu-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  <ul id="nav-links">
     {links.map(link => (
       <li>
         <a
@@ -24,7 +32,11 @@ const currentPath = Astro.url.pathname;
       <a href="https://www.linkedin.com/in/carson-farinella/" target="_blank" rel="noopener">LinkedIn</a>
     </li>
   </ul>
+  <!-- Without JS the menu button can't open the sheet, so just show the links. -->
+  <noscript><style>@media (max-width: 640px) { #nav-links { display: block !important; position: static !important; box-shadow: none !important; } .menu-toggle { display: none !important; } }</style></noscript>
 </nav>
+
+<script is:inline defer src="/scripts/nav-menu.js"></script>
 
 <style>
   nav {
@@ -32,6 +44,7 @@ const currentPath = Astro.url.pathname;
     padding: 1.15rem 0 0.9rem;
     border-bottom: 1px solid var(--rule);
   }
+  .bar { display: none; }
   ul {
     list-style: none;
     display: flex;
@@ -66,18 +79,109 @@ const currentPath = Astro.url.pathname;
     transform: translateY(-0.05em);
     opacity: 0.75;
   }
+
+  /* ---------------------------------------------------------------------------
+     Phone (≤640px): a slim sticky bar (wordmark + Menu) replaces the two-row
+     wrapped link list, and the links drop down as a sheet under the bar.
+     nav-menu.js toggles [data-open]. Nothing here applies above 640px.
+     --------------------------------------------------------------------------- */
   @media (max-width: 640px) {
-    nav ul { gap: 0.9rem 1.15rem; }   /* tighten the wrap */
-  }
-  @media (max-width: 520px) {
-    /* Wrapped group sits below a hairline (the site's divider) so the line break looks intentional */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      /* Bleed across BaseLayout's 1.25rem phone gutters so content scrolling
+         underneath doesn't show at the edges of the bar. */
+      margin: 0 -1.25rem 2.25rem;
+      padding: 0 1.25rem;
+      background: var(--bg);
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 3.5rem;
+    }
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--ink);
+    }
+    .wordmark em { font-style: italic; font-weight: 300; color: var(--accent); }
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      height: 2.75rem;                  /* 44px tap target */
+      margin-right: -0.5rem;
+      padding: 0 0.5rem;
+      background: none;
+      border: 0;
+      font: inherit;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    /* Two-line glyph that turns into an × when open */
+    .menu-icon {
+      position: relative;
+      width: 1.1rem;
+      height: 0.55rem;
+    }
+    .menu-icon::before,
+    .menu-icon::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: currentColor;
+      transition: transform 0.2s, top 0.2s;
+    }
+    .menu-icon::before { top: 0; }
+    .menu-icon::after { top: calc(100% - 1.5px); }
+    nav[data-open] .menu-toggle { color: var(--ink); }
+    nav[data-open] .menu-icon::before { top: calc(50% - 0.75px); transform: rotate(45deg); }
+    nav[data-open] .menu-icon::after { top: calc(50% - 0.75px); transform: rotate(-45deg); }
+
+    /* The sheet */
+    ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      padding: 0.25rem 1.25rem 1rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      box-shadow: 0 14px 24px -12px rgba(43, 36, 32, 0.22);
+    }
+    nav[data-open] ul { display: block; }
+    li { border-top: 1px solid var(--rule); }
+    li a {
+      display: flex;
+      align-items: center;
+      min-height: 3.25rem;
+      font-size: 0.9rem;
+    }
+    li a.active::before {
+      content: "";
+      width: 0.4rem;
+      height: 0.4rem;
+      margin-right: 0.7rem;
+      border-radius: 50%;
+      background: var(--accent);
+    }
     .external-group {
       margin-left: 0;
-      width: 100%;
-      gap: 1.25rem;
-      border-top: 1px solid var(--rule);
-      margin-top: 0.55rem;
-      padding-top: 0.9rem;
+      gap: 1.75rem;
     }
+    .external-group a { font-size: 0.8rem; }
   }
 </style>

@@ -16,8 +16,9 @@ import Nav from "../components/Nav.astro";
         <a href="https://linkedin.com/in/carson-farinella" target="_blank" rel="noopener">linkedin.com/in/carson-farinella</a>
         <span class="sep">·</span>
         <a href="https://github.com/cfarinella1205" target="_blank" rel="noopener">github.com/cfarinella1205</a>
-        <span class="sep">·</span>
-        <a href="https://carsonfarinella.com">carsonfarinella.com</a>
+        {/* The site link only earns its place on paper: on screen you're already here. */}
+        <span class="sep print-only">·</span>
+        <a class="print-only" href="https://carsonfarinella.com">carsonfarinella.com</a>
       </div>
       <a class="pdf-download" href="/resume.pdf" download="Carson-Farinella-Resume.pdf">Download PDF</a>
     </header>
@@ -205,6 +206,7 @@ import Nav from "../components/Nav.astro";
 }
 .header-links a { color: var(--accent); word-break: break-word; }
 .sep { margin: 0 0.4rem; color: var(--rule); flex-shrink: 0; }
+.print-only { display: none; }
 
   /* resume.pdf is generated at build time from this page's print styles
      (scripts/build-resume-pdf.mjs), so the download always matches. */
@@ -290,6 +292,16 @@ import Nav from "../components/Nav.astro";
   gap: 1.25rem;
 }
 @media (max-width: 600px) {
+  /* Contact line: a wrapped run of "·"-separated links breaks at random points
+     on a phone — stack it as a clean list instead. */
+  .header-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    font-size: 0.95rem;
+  }
+  .header-links .sep { display: none; }
+  .pdf-download { margin-top: 1.25rem; padding: 0.6rem 1rem; }
   .skills-grid {
     grid-template-columns: 1fr;
   }
@@ -370,6 +382,7 @@ import Nav from "../components/Nav.astro";
   .header-links { font-size: 8.5pt !important; gap: 0 !important; }
   .header-links a { text-decoration: none !important; }
   .sep { color: #000 !important; }
+  .print-only { display: inline !important; }
 
   h2 {
     font-size: 8.5pt !important;
