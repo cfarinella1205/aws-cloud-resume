@@ -32,7 +32,7 @@ What went live was still just a resume. Bad theming, half-baked content, no home
 
 The moment it was up, I started thinking about what else could live on the same domain: a homepage, a gallery, eventually a blog, and putting a Cloudflare Tunnel with auth in front of some other things I run at home so I could reach them without exposing anything directly. None of that existed yet. But the resume proved the pattern, static frontend, real pipeline, actual infrastructure, and everything I've added since has been a variation on it.
 
-Most of what I've actually learned has been about git hygiene and version control, working through Astro, and the tradeoff between adding a feature and keeping the thing simple enough that I can still maintain it. The site is still live (as you can tell if you are reading this), and it has been continously imroved upon which was really the main point of the challenge.
+Most of what I've actually learned has been about git hygiene and version control, working through Astro, and the tradeoff between adding a feature and keeping the thing simple enough that I can still maintain it. The site is still live (as you can tell if you are reading this), and it has been continuously improved upon which was really the main point of the challenge.
 
 
 

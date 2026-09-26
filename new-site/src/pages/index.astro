@@ -19,14 +19,14 @@ import Nav from "../components/Nav.astro";
       <ul class="project-list">
         <li>
           <span class="project-label">This Website & My Homelab</span>
-          <p>This site is a constant WIP, there are many improvements planned for the future and more bugs to squash with each new feature. My free time is equally taken up by maintaining and improving this site and refining or building out new homelab features. The most recent additions have been a solid workflow for adding new blog posts and Mealie in the homelab for recipe management and grocery planning.</p>
+          <p>This site runs on Astro, built and deployed through GitHub Actions to S3 and CloudFront, and it's always gaining new features. At home, my homelab services are reachable from anywhere without a single open port, via Cloudflare Tunnel with identity checks on each service. Latest additions: a streamlined blog-post workflow and Mealie for meal planning.</p>
         </li>
         <li>
-          <span class="project-label">Interview Prep</span>
-          <p>Preparing for technical interviews in tandem with my final semester at FIU, and studying for the AWS CLF-C02 and SAA-C03 certifications. Focus is mainly geared towards AWS, systems design, and brushing up on Python/Bash/Linux.</p>
+          <span class="project-label">AWS Certifications</span>
+          <p>Sitting the AWS Cloud Practitioner (CLF-C02) exam on September 30, then moving straight on to Solutions Architect – Associate (SAA-C03), targeted for December alongside my final semester at FIU.</p>
         </li>
         <li>
-          <span class="project-label">RBAC Server</span>
+          <span class="project-label">RBAC Server <span class="project-status">Shipped</span></span>
           <p>Led a five-person student dev team as scrum master through five Agile sprints to design and build a role-based access control server for FIU's Senior Capstone II. Ran sprint planning and code review end to end, while owning the auth engine implementation. Shipped and live-demoed a working RBAC system during the Summer '26 FIU Capstone Showcase.</p>
         </li>
       </ul>
@@ -120,6 +120,14 @@ import Nav from "../components/Nav.astro";
     text-transform: uppercase;
     color: var(--accent);
     padding-top: 0.25rem;
+  }
+  /* Marks a finished project that stays on the list — sits under the label,
+     quieter than it, so the column still reads as one label. */
+  .project-status {
+    display: block;
+    margin-top: 0.3rem;
+    font-weight: 500;
+    color: var(--muted);
   }
   .project-list p {
     font-size: 0.95rem;

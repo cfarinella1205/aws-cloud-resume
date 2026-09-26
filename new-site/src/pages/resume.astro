@@ -27,7 +27,7 @@ import Nav from "../components/Nav.astro";
         Senior Information Technology student at <strong>Florida International University</strong> specializing in
         cloud infrastructure, networking, and DevOps practices. Hands-on experience designing serverless architectures
         on AWS, implementing CI/CD pipelines, and managing containerized and networked homelab environments. Active
-        <strong>AWS Cloud Club</strong> member pursuing dual AWS certifications, with demonstrated leadership in Agile
+        <strong>AWS Student Builder Group</strong> member pursuing dual AWS certifications, with demonstrated leadership in Agile
         development. Targeting cloud engineering roles that draw on networking and DevOps strengths, with a long-term
         focus on growing into a Solutions Architecture position.
       </p>
@@ -40,7 +40,7 @@ import Nav from "../components/Nav.astro";
           <span class="entry-title">Florida International University (FIU)</span>
           <span class="entry-date">Expected Dec 2026</span>
         </div>
-        <div class="entry-sub">B.S. in Information Technology</div>
+        <div class="entry-sub">B.S. in Information Technology · GPA 3.62 · On track to graduate Cum Laude</div>
       </div>
     </section>
 
@@ -48,8 +48,8 @@ import Nav from "../components/Nav.astro";
       <h2>Activities &amp; Leadership</h2>
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-title">FIU AWS Cloud Club — Member</span>
-          <span class="entry-date">Inaugural Term – Present</span>
+          <span class="entry-title">FIU AWS Student Builder Group — Member</span>
+          <span class="entry-date">Spring 2026 – Present</span>
         </div>
       </div>
       <div class="entry">
@@ -59,9 +59,16 @@ import Nav from "../components/Nav.astro";
         </div>
         <ul>
           <li>
-            Led a 5-person Agile team through five sprints to design and deliver a centralized RBAC identity server
-            in Go and PostgreSQL, featuring RS256 JWT authentication, bcrypt password hashing, and least-privilege
-            Docker container networking across 3 containers and 2 isolated networks, with zero secrets in source control.
+            Led a 5-person Agile team as Scrum Master through five two-week sprints, running sprint planning, standups,
+            reviews, and retrospectives to design and deliver a centralized RBAC identity server in Go and PostgreSQL.
+          </li>
+          <li>
+            Owned the authentication engine: RS256-signed JWTs, bcrypt password hashing, and live permission lookups
+            through many-to-many role and permission tables, with zero secrets in source control.
+          </li>
+          <li>
+            Enforced least-privilege Docker networking across 3 containers and 2 isolated networks, with the database
+            unreachable from the downstream service and no host port binding; live-demoed at the Summer 2026 FIU Capstone Showcase.
           </li>
         </ul>
       </div>
@@ -79,7 +86,7 @@ import Nav from "../components/Nav.astro";
       <div class="entry">
         <div class="entry-head">
           <span class="entry-title">AWS Certified Cloud Practitioner (CLF-C02)</span>
-          <span class="entry-date">In Progress – Expected Sept 2026</span>
+          <span class="entry-date">Exam Scheduled – Sept 30, 2026</span>
         </div>
         <div class="entry-sub">Amazon Web Services</div>
       </div>
@@ -93,15 +100,16 @@ import Nav from "../components/Nav.astro";
         </div>
         <ul>
           <li>
-            Deployed a fully serverless resume website on AWS using S3, CloudFront, Route 53, Lambda, and DynamoDB,
-            demonstrating end-to-end cloud infrastructure ownership.
+            Deployed a fully serverless resume website on AWS using S3, CloudFront, Route 53, API Gateway, Lambda (Python),
+            and DynamoDB, demonstrating end-to-end cloud infrastructure ownership.
           </li>
           <li>
             Automated deployments via a GitHub Actions CI/CD pipeline invoking AWS SAM for infrastructure as code,
-            enabling repeatable and version-controlled releases.
+            deployed by a dedicated IAM user scoped to least-privilege permissions.
           </li>
           <li>
-            Served through a dual-CDN edge network (CloudFront and Cloudflare) with sub-second response times in production.
+            Layered Cloudflare in front of CloudFront for DNS, proxying, security headers, and Zero Trust Access on a
+            private route, with CloudFront caching the S3 origin at the edge.
           </li>
         </ul>
       </div>
@@ -127,7 +135,7 @@ import Nav from "../components/Nav.astro";
       <div class="skills-grid">
         <div class="skill-block">
           <strong>Cloud &amp; Infrastructure</strong>
-          <p>AWS (S3, CloudFront, Route 53, Lambda, DynamoDB), Infrastructure as Code (AWS SAM), CI/CD Pipelines (GitHub Actions), Docker</p>
+          <p>AWS (S3, CloudFront, Route 53, API Gateway, Lambda, DynamoDB, IAM), Infrastructure as Code (AWS SAM), CI/CD Pipelines (GitHub Actions), Docker</p>
         </div>
         <div class="skill-block">
           <strong>Networking &amp; Security</strong>
@@ -140,10 +148,6 @@ import Nav from "../components/Nav.astro";
         <div class="skill-block">
           <strong>Systems &amp; Tools</strong>
           <p>Linux, Git/GitHub, PostgreSQL, Docker Compose, Home Assistant, Local LLM Deployment, Android (Termux/proot), VS Code</p>
-        </div>
-        <div class="skill-block">
-          <strong>Data &amp; Automation</strong>
-          <p>IT Automation, Scripting, Database Administration</p>
         </div>
       </div>
     </section>
