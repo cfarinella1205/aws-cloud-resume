@@ -35,9 +35,10 @@ Keep them:
 
 Type tags: `devlog`, `reflection`, `guide`
 
-Topic/tool tags in use as of 2026-08-19:
+Topic/tool tags in use as of 2026-09-26:
 `homelab`, `cloudflare`, `networking`, `security`, `home-assistant`, `android`,
-`linux`, `leadership`, `capstone`, `rbac`, `go`, `astro`, `aws`, `ci-cd`, `front-end`
+`linux`, `leadership`, `capstone`, `rbac`, `go`, `astro`, `aws`, `ci-cd`, `front-end`,
+`serverless`, `iac`
 
 Add to this list as new posts introduce genuinely new topics — but check here
 first so `frontend` and `front-end` don't both end up as tags.

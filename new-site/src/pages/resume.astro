@@ -24,11 +24,11 @@ import Nav from "../components/Nav.astro";
     <section>
       <h2>Professional Summary</h2>
       <p>
-        Senior Information Technology student at <strong>Florida International University</strong> specializing in
-        cloud infrastructure, networking, and DevOps practices. Hands-on experience designing serverless architectures
-        on AWS, implementing CI/CD pipelines, and managing containerized and networked homelab environments. Active
-        <strong>AWS Student Builder Group</strong> member pursuing dual AWS certifications, with demonstrated leadership in Agile
-        development. Targeting cloud engineering roles that draw on networking and DevOps strengths, with a long-term
+        Senior Information Technology student at <strong>Florida International University</strong> focused on
+        cloud infrastructure, networking, and DevOps. Built a serverless AWS stack deployed through GitHub
+        Actions and AWS SAM, a zero-open-port homelab behind Cloudflare Tunnel, and an on-device Android traffic observer
+        that reads TLS, DNS, and QUIC. Active
+        <strong>AWS Student Builder Group</strong> member pursuing two AWS certifications. Targeting cloud engineering roles that draw on networking and DevOps strengths, with a long-term
         focus on growing into a Solutions Architecture position.
       </p>
     </section>
@@ -81,14 +81,14 @@ import Nav from "../components/Nav.astro";
           <span class="entry-title">AWS Certified Solutions Architect – Associate (SAA-C03)</span>
           <span class="entry-date">In Progress – Expected Dec 2026</span>
         </div>
-        <div class="entry-sub">Amazon Web Services</div>
+        <div class="entry-sub cert-issuer">Amazon Web Services</div>
       </div>
       <div class="entry">
         <div class="entry-head">
           <span class="entry-title">AWS Certified Cloud Practitioner (CLF-C02)</span>
           <span class="entry-date">Exam Scheduled – Sept 30, 2026</span>
         </div>
-        <div class="entry-sub">Amazon Web Services</div>
+        <div class="entry-sub cert-issuer">Amazon Web Services</div>
       </div>
     </section>
 
@@ -101,7 +101,7 @@ import Nav from "../components/Nav.astro";
         <ul>
           <li>
             Deployed a fully serverless resume website on AWS using S3, CloudFront, Route 53, API Gateway, Lambda (Python),
-            and DynamoDB, demonstrating end-to-end cloud infrastructure ownership.
+            and DynamoDB, with a visitor counter backed by an atomic DynamoDB increment.
           </li>
           <li>
             Automated deployments via a GitHub Actions CI/CD pipeline invoking AWS SAM for infrastructure as code,
@@ -119,12 +119,28 @@ import Nav from "../components/Nav.astro";
         </div>
         <ul>
           <li>
-            Architected a multi-device homelab environment running Home Assistant Core, a local LLM agent (Hermes),
-            and containerized services managed via Docker.
+            Run a multi-device homelab: Home Assistant Core on an Android tablet (Termux + proot Ubuntu), a local LLM
+            agent (Hermes), and Docker-managed services.
           </li>
           <li>
-            Engineered zero-open-port public internet access using a Cloudflare Tunnel, applying zero-trust networking
-            principles to a self-hosted infrastructure stack.
+            Exposed self-hosted services to the internet with zero open ports through an outbound Cloudflare Tunnel,
+            gated per service by Cloudflare Zero Trust Access identity policies.
+          </li>
+        </ul>
+      </div>
+      <div class="entry project-entry">
+        <div class="entry-head">
+          <span class="entry-title">BirdCage — Android Traffic Observer</span>
+          <span class="entry-date">In Development</span>
+        </div>
+        <ul>
+          <li>
+            Building an Android app that uses a local VpnService to tap a single app's traffic during a session and
+            identify the third-party companies it contacts, entirely on-device with no backend.
+          </li>
+          <li>
+            Implemented TLS SNI and DNS parsing, plus QUIC v1 Initial decoding to recover SNI from HTTP/3 traffic,
+            matched against an offline tracker-domain dataset.
           </li>
         </ul>
       </div>
@@ -139,15 +155,15 @@ import Nav from "../components/Nav.astro";
         </div>
         <div class="skill-block">
           <strong>Networking &amp; Security</strong>
-          <p>TCP/IP, DNS, Network Architecture, Network Security, Cybersecurity Fundamentals, Cloudflare Tunnel, SSH</p>
+          <p>TCP/IP, DNS, TLS (SNI), QUIC/HTTP/3, VPN tunneling (Android VpnService), Cloudflare Tunnel &amp; Zero Trust Access, JWT/RS256, SSH</p>
         </div>
         <div class="skill-block">
           <strong>Languages</strong>
-          <p>Python, Bash, Go, JavaScript, HTML, CSS, Java</p>
+          <p>Python, Bash, Go, Kotlin, JavaScript, Java, HTML, CSS</p>
         </div>
         <div class="skill-block">
           <strong>Systems &amp; Tools</strong>
-          <p>Linux, Git/GitHub, PostgreSQL, Docker Compose, Home Assistant, Local LLM Deployment, Android (Termux/proot), VS Code</p>
+          <p>Linux, Git/GitHub, PostgreSQL, Docker Compose, Astro, Android (Compose, Room, Termux), Home Assistant, Local LLMs</p>
         </div>
       </div>
     </section>
@@ -305,11 +321,12 @@ import Nav from "../components/Nav.astro";
      visible content already matches the ATS resume, so print just restyles it.
      --------------------------------------------------------------------------- */
   @media print {
-  @page { margin: 0.5in; }
+  @page { margin: 0.4in 0.5in; }
 
   nav { display: none !important; }
 
-  body {
+  /* :global — html/body live in BaseLayout, so a scoped selector never matches them. */
+  :global(html), :global(body) {
     background: white !important;
     color: #000 !important;
     padding: 0 !important;
@@ -326,7 +343,7 @@ import Nav from "../components/Nav.astro";
 
   .page-header {
     padding-bottom: 0.5rem !important;
-    margin-bottom: 0.8rem !important;
+    margin-bottom: 0.6rem !important;
     border-bottom: 1px solid #000 !important;
   }
   .page-header h1 {
@@ -343,7 +360,7 @@ import Nav from "../components/Nav.astro";
     letter-spacing: 0.1em !important;
     border-bottom: 1px solid #999 !important;
     padding-bottom: 2pt !important;
-    margin-bottom: 0.5rem !important;
+    margin-bottom: 0.35rem !important;
     break-after: avoid;
     page-break-after: avoid;
   }
@@ -353,33 +370,43 @@ import Nav from "../components/Nav.astro";
   .entry-sub { font-size: 9pt !important; margin-bottom: 0.15rem !important; }
 
   /* Full printable width — undo the 77ch screen reading measure */
-  section > p { max-width: 100% !important; font-size: 9.5pt !important; line-height: 1.4 !important; }
+  section > p { max-width: 100% !important; font-size: 9.5pt !important; line-height: 1.35 !important; }
 
   .entry ul, .project-entry ul {
     margin-top: 0.25rem !important;
     font-size: 9pt !important;
-    line-height: 1.4 !important;
+    line-height: 1.35 !important;
   }
-  .entry ul li, .project-entry ul li { margin-bottom: 0.15rem !important; }
+  .entry ul li, .project-entry ul li { margin-bottom: 0.1rem !important; }
 
   section {
     border-bottom: none !important;
-    margin-bottom: 0.65rem !important;
+    margin-bottom: 0.5rem !important;
     padding-bottom: 0 !important;
     page-break-inside: auto;   /* allow a section to flow across a break */
   }
 
   /* Keep the small, atomic units from splitting instead of whole sections */
   .entry, .project-entry, .skill-block { page-break-inside: avoid; }
-  .entry { margin-bottom: 0.45rem !important; }
+  .entry { margin-bottom: 0.35rem !important; }
 
+  /* One "Label: items" line per group — the two-column grid wrapped every
+     group to three lines and pushed Skills onto a second page. */
   .skills-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.35rem 0.9rem !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.15rem !important;
   }
-
-  .skill-block strong { font-size: 8.5pt !important; margin-bottom: 0.1rem !important; }
+  .skill-block { display: flex; gap: 0.4rem; align-items: baseline; }
+  .skill-block strong {
+    flex: 0 0 16em;
+    white-space: nowrap;
+    font-size: 8.5pt !important;
+    margin-bottom: 0 !important;
+  }
   .skill-block p { font-size: 9pt !important; line-height: 1.35 !important; }
+
+  /* The cert titles already say AWS — the issuer line is a spare row each. */
+  .cert-issuer { display: none !important; }
 
   footer { display: none !important; }
 

@@ -2,7 +2,7 @@
 title: "The AWS Cloud Resume Challenge"
 date: 2026-08-30T18:42:24Z
 description: "Taking the initial plunge into AWS. The problems I faced, what they taught me, and where it has led."
-tags: ["devlog","IaC","aws","networking","serverless"]
+tags: ["devlog","aws","serverless","iac","ci-cd"]
 draft: false
 ---
 
@@ -40,4 +40,4 @@ Most of what I've actually learned has been about git hygiene and version contro
 
 
 
-*This is part of an ongoing series of retroactive posts documenting my homelab build.*
+*This is part of an ongoing series of retroactive posts documenting the projects behind this site and my homelab.*
