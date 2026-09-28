@@ -7,10 +7,9 @@ import gallery from "../data/gallery.json";
 import rbacImg from "../assets/gallery/rbac-terminal-log.png";
 import awsImg from "../assets/gallery/aws-s3-bucket-objects.png";
 import astroImg from "../assets/gallery/before-after-astro.png";
-import birdcageImg from "../assets/gallery/birdcage-domain-observer.png";
 
 type GalleryItem = {
-  id: "rbac" | "aws" | "astro" | "birdcage";
+  id: "rbac" | "aws" | "astro";
   order: string;
   title: string;
   caption: string;
@@ -20,7 +19,7 @@ type GalleryItem = {
 };
 
 const items = gallery as GalleryItem[];
-const sourceImages = { rbac: rbacImg, aws: awsImg, astro: astroImg, birdcage: birdcageImg };
+const sourceImages = { rbac: rbacImg, aws: awsImg, astro: astroImg };
 
 // The lightbox shows a single full-resolution frame rather than the
 // responsive <Image> srcset used inline, so precompute one large AVIF
