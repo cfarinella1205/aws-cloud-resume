@@ -1,6 +1,6 @@
 ---
 title: "Leading a Capstone Team to Ship & Showcase a Real RBAC Server"
-date: 2026-07-23T11:15:05Z
+date: 2026-08-01T00:00:00Z
 description: "Leading a five-person capstone team through five sprints of real Scrum, and owning the security-critical piece."
 tags: ["reflection","leadership","capstone","rbac","go"]
 draft: false
