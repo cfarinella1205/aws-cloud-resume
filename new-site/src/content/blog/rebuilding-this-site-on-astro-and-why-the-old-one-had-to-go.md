@@ -1,6 +1,6 @@
 ---
 title: "Rebuilding This Site on Astro, and Why the Old One Had to Go"
-date: 2026-07-22T23:13:05Z
+date: 2026-09-01T00:00:00Z
 description: "Retiring a hand-rolled static site for a proper build pipeline, and what it actually took to get the new one live."
 tags: ["devlog","astro","aws","ci-cd","front-end"]
 draft: false

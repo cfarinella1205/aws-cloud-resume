@@ -1,6 +1,6 @@
 ---
 title: "Running Home Assistant Core on a Generic Android Tablet"
-date: 2026-06-01T00:00:00Z
+date: 2026-05-01T00:00:00Z
 description: "How I turned an old Android 8.1 tablet into a surprisingly capable smart home server using Termux, proot, and Ubuntu."
 tags: ["devlog", "homelab", "home-assistant", "android", "linux"]
 draft: false
