@@ -3,6 +3,7 @@ const lbMedia = document.getElementById("lb-media");
 const lbTitle = document.getElementById("lb-title");
 const lbText = document.getElementById("lb-text");
 const lbPost = document.getElementById("lb-post");
+const lbCredential = document.getElementById("lb-credential");
 const lbPanel = lb?.querySelector(".lightbox-panel");
 const lbCaptionToggle = lb?.querySelector(".lightbox-caption-toggle");
 let lastFocused = null;
@@ -64,6 +65,14 @@ function openLightbox(trigger) {
     lbPost.hidden = false;
   } else {
     lbPost.hidden = true;
+  }
+
+  const credential = trigger.dataset.credential ?? "";
+  if (credential) {
+    lbCredential.href = credential;
+    lbCredential.hidden = false;
+  } else {
+    lbCredential.hidden = true;
   }
 
   lb.hidden = false;
