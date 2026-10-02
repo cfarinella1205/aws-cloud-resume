@@ -16,6 +16,7 @@ type GalleryItem = {
   caption: string;
   alt: string;
   post?: string;
+  credential?: string;  // external verification URL (e.g. Credly) for cert items
   portrait?: boolean;   // phone screenshots: shown at phone width, centered
 };
 
@@ -63,6 +64,7 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
               data-src={lightboxSrcs[item.id]}
               data-alt={item.alt}
               data-post={item.post ?? ""}
+              data-credential={item.credential ?? ""}
               aria-label={`View full-size: ${item.title}`}
             >
               <Image
@@ -83,6 +85,9 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
             <p>{item.caption}</p>
             {item.post && (
               <a class="post-link" href={`/blog/${item.post}`}>Read the post &rarr;</a>
+            )}
+            {item.credential && (
+              <a class="post-link" href={item.credential} target="_blank" rel="noopener">Verify on Credly &#8599;</a>
             )}
           </div>
         </section>
@@ -108,6 +113,7 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
         </div>
         <p id="lb-text"></p>
         <a id="lb-post" class="lightbox-post" href="#" hidden>Read the post &rarr;</a>
+        <a id="lb-credential" class="lightbox-post" href="#" target="_blank" rel="noopener" hidden>Verify on Credly &#8599;</a>
       </figcaption>
     </figure>
   </div>
@@ -241,6 +247,7 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
     border-bottom: 1px solid var(--rule);
     padding-bottom: 2px;
   }
+  .post-link + .post-link { margin-left: 1.5rem; }
   .post-link:hover {
     border-color: var(--accent);
     text-decoration: none;
@@ -336,6 +343,7 @@ const sizes = "(min-width: 1240px) 1040px, 90vw";
     border-bottom: 1px solid var(--rule);
     padding-bottom: 2px;
   }
+  .lightbox-post + .lightbox-post { margin-left: 1.5rem; }
   .lightbox-post[hidden] { display: none; }
   .lightbox-post:hover { border-color: var(--accent); text-decoration: none; }
 

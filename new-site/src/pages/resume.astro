@@ -80,7 +80,9 @@ import Nav from "../components/Nav.astro";
       <h2>Certifications</h2>
       <div class="entry">
         <div class="entry-head">
-          <span class="entry-title">AWS Certified Cloud Practitioner (CLF-C02)</span>
+          <span class="entry-title">
+            AWS Certified Cloud Practitioner (CLF-C02)<span class="sep">·</span><a class="cert-verify" href="https://www.credly.com/badges/7896e44e-391c-4481-9f90-48d3c864521d/public_url" target="_blank" rel="noopener">Verify on Credly</a>
+          </span>
           <span class="entry-date">Earned Sept 2026</span>
         </div>
         <div class="entry-sub cert-issuer">Amazon Web Services</div>
@@ -244,6 +246,11 @@ import Nav from "../components/Nav.astro";
     font-weight: 600;
     font-size: 0.95rem;
     color: var(--ink);
+  }
+  .cert-verify {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--accent);
   }
   .entry-date {
     font-size: 0.8rem;
@@ -425,5 +432,7 @@ import Nav from "../components/Nav.astro";
   .pdf-download { display: none !important; }
 
   a { color: #000 !important; text-decoration: none !important; }
+  /* The one link a reader is meant to click on paper — keep it looking like one. */
+  .cert-verify { font-size: 9pt !important; text-decoration: underline !important; }
 }
 </style>
