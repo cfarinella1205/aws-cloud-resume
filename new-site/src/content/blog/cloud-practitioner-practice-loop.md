@@ -6,7 +6,7 @@ tags: ["reflection", "aws", "certifications", "study-methods"]
 draft: false
 ---
 
-I passed the AWS Cloud Practitioner exam on September 30. I got there by taking practice exams until my scores moved from the 400s to the 800s and 900s.
+I passed the AWS Cloud Practitioner exam on September 30. I got there by taking practice exams until my scores moved from the 400s to the 800s and 900s. The passing score is 700.
 
 That method will not carry over to the next exam.
 
@@ -27,16 +27,6 @@ A study block was about two hours. Every block had the same three pieces: a full
 The first blocks ran long. By the end I was finishing a full exam in 20 to 30 minutes, and the modules were quick too, so two exams and a module fit inside the two hours. I studied five days a week and fit the blocks around school. All of my classes are async, which makes that easy.
 
 It was not a complicated system, but it was a lot of questions.
-
-## Watching the number move
-
-My first practice exams landed in the 400s. The passing score is 700 out of 1000, so I started well short. By the end I was scoring between 800 and 900.
-
-That number is good for one thing. It tells you whether you are getting better at the exams you are practicing on. The time it took me is similar. Part of finishing in 20 to 30 minutes was knowledge, and part of it was getting used to how the questions are written. The real exam felt familiar, so my process seems to have been sufficient.
-
-What a practice score cannot tell you is what is missing from it. It averages every domain into one figure, so it can look healthy while one domain stays weak. It also only covers what the people who wrote the question bank chose to cover. The official exam guide lists the domains and the services in scope, and that list is my checklist.
-
-The score told me I was ready for the practice exams. I am happy to say I was ready for the real one too.
 
 ## Why the loop will not carry over
 
